@@ -1,18 +1,19 @@
-# RCAFT — Ethical QR Customer Feedback & Google Review Link Assistant
+# TrueReview — Ethical QR Customer Feedback & Google Review Link Assistant
 
 [![Policy](https://img.shields.io/badge/Google%20Policy-100%25%20Compliant-brightgreen)](docs/GOOGLE_POLICY_CHECKLIST.md)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue)](tsconfig.json)
 [![Next.js](https://img.shields.io/badge/Next.js-15%20App%20Router-black)](https://nextjs.org)
 [![Database](https://img.shields.io/badge/Database-Supabase%20PostgreSQL-emerald)](docs/DB_SCHEMA.md)
 
-**RCAFT** is a modern, ethical, mobile-first SaaS platform designed for local brick-and-mortar businesses in Pune, Pimpri-Chinchwad, and Western Maharashtra. It provides:
-1. **Dynamic QR Code Generation** for physical tabletop/counter stands that never break if links change.
-2. **Fast Mobile Customer Flow (`/r/[slug]`)** offering two equal, unconditioned choices:
-   - **Open Google Review Page** (direct link to official Google Maps listing).
-   - **Send Private Feedback** (direct private communication channel to management).
-3. **100% Google UGC Policy Compliance** — Zero review gating, zero sentiment routing, zero incentives, zero automated fake reviews.
-4. **Honest Funnel Analytics** — Tracks scans, private feedback submissions, and Google link clicks without claiming reviews were published.
-5. **Optional AI Wording Clarity Aid (Feature-Flagged)** — Strictly constrained server-side clarity assistant based only on customer-supplied words.
+**TrueReview** is a modern, ethical, mobile-first SaaS platform designed for local businesses. It provides:
+1. **Multi-Business Profile Management** — Authorized owners can create, manage, and switch between multiple business profiles with isolated authorization and Row Level Security (RLS).
+2. **Dynamic QR Code Generation** for physical tabletop/counter stands that encode permanent TrueReview URLs (`/r/[slug]`) and never break if Google Place IDs or links change.
+3. **Fast Mobile Customer Experience (`/r/[slug]`)** offering two equal, unconditioned choices:
+   - **Open Google Review Page** (direct link to the business's official Google Maps dialog).
+   - **Send Private Feedback** (direct private communication channel to business management).
+4. **100% Google UGC Policy Compliance** — Zero review gating, zero sentiment routing, zero incentives, zero automated fake reviews.
+5. **Honest Funnel Analytics** — Tracks scans, private feedback submissions, and Google link clicks without claiming reviews were published.
+6. **Configurable Brand Logo Component** — Drop your official logo asset into `public/brand/logo.svg` or `public/brand/logo.png`. TrueReview automatically detects and renders it with a sleek typographic fallback.
 
 ---
 
@@ -21,7 +22,7 @@
 ### Prerequisites
 - Node.js `v20+` or `v26+` (tested on `v26.10.0`)
 - npm `10+` or `11+` (tested on `11.19.1`)
-- A Supabase project (or local Supabase CLI instance)
+- A Supabase project (or local development fallback)
 
 ### 1. Clone & Install
 ```bash
@@ -38,7 +39,7 @@ cp .env.example .env.local
 
 Fill in your configuration:
 ```env
-# App URL
+# App URL (Must be configured with your production domain before generating print QR codes)
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
 # Supabase Configuration
@@ -54,34 +55,61 @@ AI_PROVIDER="gemini" # or "openai"
 AI_PROVIDER_API_KEY="your-ai-api-key"
 ```
 
-### 3. Apply Database Migrations
-Run the SQL migration script located in `supabase/migrations/20261015000000_init_schema.sql` inside your Supabase SQL Editor.
-
-### 4. Run Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+> **Note on Local Development Without Supabase Credentials:**  
+> TrueReview includes a built-in safe local fallback. If Supabase keys are not yet configured in `.env.local`, the application automatically provides a sample **Demo Salon** profile so you can explore the dashboard, QR stands, and public flow immediately.
 
 ---
 
-## 📚 Complete Project Documentation
+## 🗄️ Supabase Setup & Migrations
 
-All design specs, policies, and research are maintained under `/docs`:
-- [Product Brief](docs/PRODUCT_BRIEF.md) — Problem statement, target personas, non-goals.
-- [Market & Competitor Research](docs/RESEARCH.md) — Links, pricing benchmarks, niche scoring matrix.
-- [Google Policy & Guardrails](docs/GOOGLE_POLICY_CHECKLIST.md) — 100% compliance rules and testable criteria.
-- [Product Requirements Document (PRD)](docs/PRD.md) — User stories and functional acceptance criteria.
-- [MVP Roadmap](docs/MVP_ROADMAP.md) — Milestone breakdown (M1 to M8) and exclusions.
-- [Customer Validation Plan](docs/VALIDATION_PLAN.md) — Pune business owner interview script and go/no-go triggers.
-- [Architecture & Tech Spec](docs/ARCHITECTURE.md) — App Router layout, component hierarchy, external APIs.
-- [Database Schema & RLS](docs/DB_SCHEMA.md) — PostgreSQL DDL and Row Level Security policies.
-- [Threat Model](docs/THREAT_MODEL.md) — STRIDE security analysis and prompt injection defenses.
-- [Privacy & Retention Policy](docs/PRIVACY_AND_RETENTION.md) — DPDP Act compliance and data minimization.
-- [Master Test Plan](docs/TEST_PLAN.md) — Test matrix, guardrail assertions, and quality gates.
-- [Sales & Pilot Plan](docs/SALES_AND_PILOT_PLAN.md) — 5-minute demo script, objection handling, pilot offer.
-- [Launch Checklist](docs/LAUNCH_CHECKLIST.md) — Pre-launch verification gates.
-- [Assumptions & Decision Log](docs/ASSUMPTIONS_AND_DECISIONS.md) — Architectural decision records (ADRs).
+Follow these steps in your Supabase dashboard to link your production or staging database:
+
+1. **Create Project**: Go to [supabase.com](https://supabase.com) and create a new project.
+2. **Execute Migration**:
+   - In your Supabase dashboard, open the **SQL Editor**.
+   - Copy the contents of [`supabase/migrations/20261015000000_init_schema.sql`](file:///Users/vivekgajdhane/Documents/antigravity/Nexcan%20AI/Google%20Review%20Automation/supabase/migrations/20261015000000_init_schema.sql).
+   - Paste and click **Run**. This creates:
+     - `businesses` table with unique slugs and custom welcome messages.
+     - `business_memberships` table for multi-tenant role-based access (`owner`, `manager`).
+     - `feedback_submissions` and `analytics_events` tables.
+     - PostgreSQL Row Level Security (RLS) policies ensuring business isolation.
+3. **Copy API Keys**:
+   - Navigate to **Project Settings** → **API**.
+   - Copy the **Project URL** into `NEXT_PUBLIC_SUPABASE_URL`.
+   - Copy the **anon public** key into `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+   - Copy the **service_role secret** key into `SUPABASE_SERVICE_ROLE_KEY` (kept server-only; never exposed to browser).
+
+---
+
+## 🎨 Official Brand Logo Asset
+
+To display your official logo across the application:
+1. Place your vector logo at:
+   ```
+   public/brand/logo.svg
+   ```
+   *(or PNG format at `public/brand/logo.png`)*
+2. The `<Logo />` component (`src/components/ui/logo.tsx`) automatically detects the file and displays it in the header, navigation, and customer landing pages.
+3. If no file is present, a clean, professional SVG icon and typographic mark is used as a fallback.
+
+---
+
+## 🧪 Testing & Quality Gates
+
+Run the test suite and quality checks:
+```bash
+# Run unit & policy compliance tests
+npm test
+
+# Run TypeScript typecheck
+npm run typecheck
+
+# Run ESLint
+npm run lint
+
+# Run Next.js production build
+npm run build
+```
 
 ---
 
@@ -89,7 +117,7 @@ All design specs, policies, and research are maintained under `/docs`:
 
 Google Maps strictly prohibits **review gating** (filtering reviews by sentiment) and **incentivized reviews** ([Policy Reference](https://support.google.com/contributionpolicy/answer/7400114)).
 
-RCAFT is architected to protect our partner businesses:
+TrueReview is architected to protect partner businesses:
 - **No Sentiment Routing:** Dissatisfied and satisfied customers see the exact same options.
 - **No Incentives:** No discounts, coupons, or freebies in exchange for reviews.
 - **Truthful Analytics:** We record link clicks (`google_review_link_clicked`), never falsely claiming that a review was published.
