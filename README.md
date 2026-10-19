@@ -1,124 +1,186 @@
-# TrueReview — Ethical QR Customer Feedback & Google Review Link Assistant
+# 🌟 TrueReview — AI-Powered Google Review Automation SaaS
 
-[![Policy](https://img.shields.io/badge/Google%20Policy-100%25%20Compliant-brightgreen)](docs/GOOGLE_POLICY_CHECKLIST.md)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue)](tsconfig.json)
-[![Next.js](https://img.shields.io/badge/Next.js-15%20App%20Router-black)](https://nextjs.org)
-[![Database](https://img.shields.io/badge/Database-Supabase%20PostgreSQL-emerald)](docs/DB_SCHEMA.md)
+<div align="center">
 
-**TrueReview** is a modern, ethical, mobile-first SaaS platform designed for local businesses. It provides:
-1. **Multi-Business Profile Management** — Authorized owners can create, manage, and switch between multiple business profiles with isolated authorization and Row Level Security (RLS).
-2. **Dynamic QR Code Generation** for physical tabletop/counter stands that encode permanent TrueReview URLs (`/r/[slug]`) and never break if Google Place IDs or links change.
-3. **Fast Mobile Customer Experience (`/r/[slug]`)** offering two equal, unconditioned choices:
-   - **Open Google Review Page** (direct link to the business's official Google Maps dialog).
-   - **Send Private Feedback** (direct private communication channel to business management).
-4. **100% Google UGC Policy Compliance** — Zero review gating, zero sentiment routing, zero incentives, zero automated fake reviews.
-5. **Honest Funnel Analytics** — Tracks scans, private feedback submissions, and Google link clicks without claiming reviews were published.
-6. **Configurable Brand Logo Component** — Drop your official logo asset into `public/brand/logo.svg` or `public/brand/logo.png`. TrueReview automatically detects and renders it with a sleek typographic fallback.
+![Next.js](https://img.shields.io/badge/Next.js-15%20App%20Router-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%20RLS-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Google Policy](https://img.shields.io/badge/Google_UGC_Policy-100%25_Compliant-success?style=for-the-badge&logo=google&logoColor=white)
+
+**A high-converting, config-driven SaaS platform engineered to help local businesses collect authentic 5-star Google Reviews with zero customer friction.**
+
+[🚀 View Live Demo](https://phoenixtechacademy.vercel.app/r/phoenix-tech) • [🖨️ View QR Stand](https://phoenixtechacademy.vercel.app/qr/phoenix-tech) • [📖 Architecture Docs](docs/ARCHITECTURE.md) • [🛡️ Policy Checklist](docs/GOOGLE_POLICY_CHECKLIST.md)
+
+</div>
 
 ---
 
-## 🚀 Quickstart & Local Setup
+## ⚡ The Problem & The Solution
 
-### Prerequisites
-- Node.js `v20+` or `v26+` (tested on `v26.10.0`)
-- npm `10+` or `11+` (tested on `11.19.1`)
-- A Supabase project (or local development fallback)
+| The Traditional Way 🛑 | The TrueReview Way 🚀 |
+| :--- | :--- |
+| Customer scans generic QR code and lands on a static Google profile. | Customer scans branded QR and opens a personalized 5-second experience. |
+| Customer has writer's block: *"I don't know what to write."* | 1-Tap AI Review Assistant generates structured feedback based on selected services. |
+| Supported only in English. | Multilingual support in **English, Marathi (मराठी), Hindi (हिंदी), and Hinglish**. |
+| Customer must manually find the "Review" tab, tap stars, and write. | **1-Tap Direct Deep Link** automatically pops open Google's 5-star review composer box. |
+| Hardcoded websites require code deployment for each new client. | **100% Config-Driven Multi-Tenancy**: Add new businesses via Excel or config in 30 seconds. |
 
-### 1. Clone & Install
+---
+
+## 🔄 End-to-End User Conversion Flow
+
+```mermaid
+flowchart LR
+    A["📱 Customer Scans<br/>Branded QR Stand"] --> B["⚡ Instant Profile Loaded<br/>(0ms Lag / No Login Wall)"]
+    B --> C["🎯 Select Course/Service<br/>& Key Highlights"]
+    C --> D["🌐 Choose Language<br/>(EN / MR / HI / Hinglish)"]
+    D --> E["🤖 Instant AI Review Draft<br/>Auto-Generated"]
+    E --> F["📋 1-Tap 'Copy Draft &<br/>Open Google Reviews'"]
+    F --> G["⭐ Native Google Review Box<br/>Ready to Paste & Submit!"]
+```
+
+---
+
+## ✨ Core Features
+
+### 1. 🎯 Direct Google Review Box Modal Intent
+- Bypasses static Google Search knowledge panels and mobile hash stripping.
+- Uses canonical Places API intent (`https://search.google.com/local/writereview?placeid=<PLACE_ID>`) that natively triggers the 5-star rating selector and blank review comment area on Android and iOS devices.
+
+### 2. 🤖 5-Second Multilingual AI Review Assistant
+- Customers select what service they experienced (e.g., *MS-CIT Certification*, *Python & Coding*, *Web Development*) and what stood out (*Expert Faculty*, *Hands-on Lab*, *Personal Attention*).
+- Instantly constructs an authentic, natural review in seconds without typing fatigue.
+- Supports **English**, **Hinglish**, **मराठी (Marathi)**, and **हिंदी (Hindi)**.
+
+### 3. 🖨️ Dynamic Printable Counter QR Stands
+- Automatically generates high-resolution, vector-crisp rounded QR codes embedded with the business logo.
+- Ready-to-print acrylic stand layout with call-to-action badges (`/qr/[slug]`).
+- QR links point to permanent SaaS routes (`/r/[slug]`) so printed physical stands never break if Google Maps links change.
+
+### 4. 🏢 Config-Driven Multi-Tenancy
+- Zero code changes required to onboard new businesses.
+- Centrally governed via `src/data/businesses.ts` and `TrueReview_Business_Registry.xlsx`.
+- Automatically injects brand colors, custom logos, dynamic service chips, review highlights, and social touchpoints (Instagram, WhatsApp, Website, Facebook, vCard contact download).
+
+### 5. 🛡️ 100% Google UGC Policy & Anti-Gating Compliant
+- **Zero Review Gating:** Complies strictly with [Google Maps User Contributed Content Policies](https://support.google.com/contributionpolicy/answer/7400114).
+- No sentiment screening, no conditional routing, no prohibited review incentives.
+- Includes an optional private feedback loop for internal issue resolution without gating public reviews.
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+```text
+├── src/
+│   ├── app/
+│   │   ├── (auth)/             # Supabase Authentication (Login / Signup)
+│   │   ├── (dashboard)/        # Business Owner Portal (QR Kits, Feedback, Analytics)
+│   │   ├── api/public/         # High-speed public APIs for reviews, events, & business data
+│   │   ├── qr/[slug]/          # Printable Tabletop/Counter Stand View
+│   │   └── r/[slug]/           # Mobile-First Customer Review Experience
+│   ├── components/ui/          # Modern UI Component Library
+│   ├── data/businesses.ts      # Centralized Multi-Tenant Business Registry
+│   ├── lib/
+│   │   ├── ai-review-generator.ts # Deterministic & LLM review drafting engine
+│   │   ├── rounded-qr.ts       # Canvas & SVG QR generation with embedded logo
+│   │   └── supabase/           # Server and client Supabase connectors with RLS
+│   └── types/                  # TypeScript Data Models & Database Schemas
+├── supabase/migrations/        # PostgreSQL Schema & Row Level Security Policies
+└── TrueReview_Business_Registry.xlsx # Master Client Onboarding Spreadsheet
+```
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Framework** | Next.js 15 (App Router) | Server-side rendering, API routes, and optimal edge caching |
+| **Language** | TypeScript (Strict Mode) | End-to-end type safety |
+| **Styling** | Tailwind CSS + Vanilla CSS | Fluid micro-animations, glassmorphism, responsive mobile UI |
+| **Database** | Supabase (PostgreSQL) | Multi-tenant relational storage with Row Level Security (RLS) |
+| **Icons** | Lucide React | Minimal, modern icons |
+| **Deployment** | Vercel | Global Edge Network hosting |
+
+---
+
+## 🚀 Quickstart & Local Development
+
+### 1. Clone & Install Dependencies
 ```bash
-git clone <repo-url>
-cd "Google Review Automation"
+git clone https://github.com/vivekgajdhane/google-review-automation.git
+cd google-review-automation
 npm install
 ```
 
 ### 2. Configure Environment Variables
-Copy `.env.example` to `.env.local`:
+Copy the template:
 ```bash
 cp .env.example .env.local
 ```
 
-Fill in your configuration:
+Configure your credentials in `.env.local`:
 ```env
-# App URL (Must be configured with your production domain before generating print QR codes)
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
-
-# Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
 SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
-
-# Feature Flags
-ENABLE_AI_REVIEW_ASSIST=false
-
-# Optional AI Provider (only required if ENABLE_AI_REVIEW_ASSIST=true)
-AI_PROVIDER="gemini" # or "openai"
-AI_PROVIDER_API_KEY="your-ai-api-key"
 ```
 
-> **Note on Local Development Without Supabase Credentials:**  
-> TrueReview includes a built-in safe local fallback. If Supabase keys are not yet configured in `.env.local`, the application automatically provides a sample **Demo Salon** profile so you can explore the dashboard, QR stands, and public flow immediately.
+*(Note: The platform includes instantaneous in-memory fallback. If Supabase keys are omitted, the application runs fully functional using the built-in registry).*
+
+### 3. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000/r/phoenix-tech](http://localhost:3000/r/phoenix-tech) in your browser.
 
 ---
 
-## 🗄️ Supabase Setup & Migrations
+## ⚙️ Adding a New Business Client in 30 Seconds
 
-Follow these steps in your Supabase dashboard to link your production or staging database:
+To add a new business to the system:
 
-1. **Create Project**: Go to [supabase.com](https://supabase.com) and create a new project.
-2. **Execute Migration**:
-   - In your Supabase dashboard, open the **SQL Editor**.
-   - Copy the contents of [`supabase/migrations/20261015000000_init_schema.sql`](file:///Users/vivekgajdhane/Documents/antigravity/Nexcan%20AI/Google%20Review%20Automation/supabase/migrations/20261015000000_init_schema.sql).
-   - Paste and click **Run**. This creates:
-     - `businesses` table with unique slugs and custom welcome messages.
-     - `business_memberships` table for multi-tenant role-based access (`owner`, `manager`).
-     - `feedback_submissions` and `analytics_events` tables.
-     - PostgreSQL Row Level Security (RLS) policies ensuring business isolation.
-3. **Copy API Keys**:
-   - Navigate to **Project Settings** → **API**.
-   - Copy the **Project URL** into `NEXT_PUBLIC_SUPABASE_URL`.
-   - Copy the **anon public** key into `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-   - Copy the **service_role secret** key into `SUPABASE_SERVICE_ROLE_KEY` (kept server-only; never exposed to browser).
-
----
-
-## 🎨 Official Brand Logo Asset
-
-To display your official logo across the application:
-1. Place your vector logo at:
-   ```
-   public/brand/logo.svg
-   ```
-   *(or PNG format at `public/brand/logo.png`)*
-2. The `<Logo />` component (`src/components/ui/logo.tsx`) automatically detects the file and displays it in the header, navigation, and customer landing pages.
-3. If no file is present, a clean, professional SVG icon and typographic mark is used as a fallback.
+1. Open `src/data/businesses.ts` (or update `TrueReview_Business_Registry.xlsx` and run `node scripts/sync-excel.mjs`).
+2. Add a new client entry:
+```typescript
+"my-salon": {
+  id: "salon-1",
+  name: "Glow & Shine Salon",
+  slug: "glow-shine",
+  primaryColor: "#d946ef",
+  accentColor: "#fdf4ff",
+  googleReviewUrl: "https://search.google.com/local/writereview?placeid=<YOUR_PLACE_ID>",
+  courseOptions: ["Hair Spa", "Facial & Cleanup", "Bridal Makeup"],
+  highlightOptions: ["Expert Stylists", "Hygienic Ambiance", "Painless Service"]
+}
+```
+3. Instantly visit `/r/glow-shine` — the custom-branded review page and QR kit are live immediately without redeploying code.
 
 ---
 
-## 🧪 Testing & Quality Gates
+## 🧪 Testing & Validation
 
-Run the test suite and quality checks:
 ```bash
 # Run unit & policy compliance tests
 npm test
 
-# Run TypeScript typecheck
+# Run TypeScript type validation
 npm run typecheck
 
-# Run ESLint
+# Run ESLint quality gates
 npm run lint
 
-# Run Next.js production build
+# Build production bundle
 npm run build
 ```
 
 ---
 
-## 🛡️ Ethical Guardrails & Google Review Policy
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
 
-Google Maps strictly prohibits **review gating** (filtering reviews by sentiment) and **incentivized reviews** ([Policy Reference](https://support.google.com/contributionpolicy/answer/7400114)).
+---
 
-TrueReview is architected to protect partner businesses:
-- **No Sentiment Routing:** Dissatisfied and satisfied customers see the exact same options.
-- **No Incentives:** No discounts, coupons, or freebies in exchange for reviews.
-- **Truthful Analytics:** We record link clicks (`google_review_link_clicked`), never falsely claiming that a review was published.
-- **Customer Control:** If AI wording assistance is enabled, it acts only as a clarity tool on customer text without adding fake claims or altering sentiment.
+<div align="center">
+Built with ❤️ for Local Businesses • Powered by AI & Next.js
+</div>
