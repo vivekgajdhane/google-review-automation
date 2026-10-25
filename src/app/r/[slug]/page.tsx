@@ -23,13 +23,20 @@ import {
   Share2
 } from "lucide-react";
 
+import { BhikshuReviewInterface } from "@/components/bhikshu/BhikshuReviewInterface";
+
 export default function PublicBusinessPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = React.use(params);
-  const slug = resolvedParams?.slug || "phoenix-tech";
+  const slug = resolvedParams?.slug || "bhikshu-tattoo";
+
+  // Dedicated custom interface for Bhikshu Tattoo Studio
+  if (slug === "bhikshu-tattoo") {
+    return <BhikshuReviewInterface business={getRegisteredBusiness("bhikshu-tattoo")} />;
+  }
 
   // Instant synchronous profile loading - 0ms delay, no layout shift or lag
   const [business, setBusiness] = React.useState<PublicBusinessData>(() =>

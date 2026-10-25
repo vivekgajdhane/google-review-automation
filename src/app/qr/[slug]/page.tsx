@@ -43,20 +43,20 @@ export default function DynamicQrStandPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = React.use(params);
-  const slug = resolvedParams?.slug || "phoenix-tech";
+  const slug = resolvedParams?.slug || "bhikshu-tattoo";
 
   const [business, setBusiness] = React.useState<PublicBusinessData>(() =>
     getRegisteredBusiness(slug)
   );
 
   // Business theme colors
-  const primaryColor = business.primaryColor || "#000000";
+  const primaryColor = business.primaryColor || "#4A554D";
 
   // Destination modes: "software" (/r/slug - our app) | "google" (direct Google Maps review composer box)
   const [destinationMode, setDestinationMode] = React.useState<"software" | "google">("software");
   
   const [publicHost, setPublicHost] = React.useState<string>(
-    "https://phoenixtechacademy.vercel.app"
+    "https://bhikshutattoostudio.vercel.app"
   );
 
   // Automatically adapt to current domain if visited over HTTPS

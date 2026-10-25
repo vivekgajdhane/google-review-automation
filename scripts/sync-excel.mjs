@@ -103,8 +103,8 @@ export function getRegisteredBusiness(slug: string): PublicBusinessData {
   if (BUSINESSES_REGISTRY[normalized]) {
     return BUSINESSES_REGISTRY[normalized];
   }
-  // Default fallback is phoenix-tech or first available
-  return BUSINESSES_REGISTRY["phoenix-tech"] || Object.values(BUSINESSES_REGISTRY)[0];
+  // Default fallback is bhikshu-tattoo
+  return BUSINESSES_REGISTRY["bhikshu-tattoo"] || Object.values(BUSINESSES_REGISTRY)[0];
 }
 `;
 
