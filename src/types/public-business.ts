@@ -24,6 +24,7 @@ export interface PublicBusinessData {
   courseOptions?: string[];
   highlightOptions?: string[];
   isDemo?: boolean;
+  email?: string;
 }
 
 export const PHOENIX_TECH_BUSINESS: PublicBusinessData = {
@@ -34,8 +35,8 @@ export const PHOENIX_TECH_BUSINESS: PublicBusinessData = {
   category: "Computer Training Institute",
   welcomeMessage: "Empowering careers through practical tech education! Share your learning experience on Google.",
   logoPath: "/assets/phoenix-logo.png",
-  primaryColor: "#C9A24D",
-  accentColor: "#0F0F12",
+  primaryColor: "#045d17",
+  accentColor: "#fff3d7",
   googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJrW2Ak0WhsYgR_IE53lu0Jqg",
   googleMapsUrl: "https://maps.app.goo.gl/LxWdpPeaiGrhzMQPA",
   websiteUrl: "https://phoenix-tech.in/",
@@ -65,6 +66,52 @@ export const PHOENIX_TECH_BUSINESS: PublicBusinessData = {
     "Flexible Batch Timings",
     "Affordable Fees",
     "Career Guidance"
+  ],
+  isDemo: false,
+};
+
+export const BHIKSHU_TATTOO_BUSINESS: PublicBusinessData = {
+  id: "bhikshu-tattoo-id",
+  name: "Bhikshu Tattoo Studio",
+  slug: "bhikshu-tattoo",
+  tagline: "Viman Nagar, Pune • Connecting Stories to Tattoo",
+  category: "Tattoo & Body Art Studio",
+  welcomeMessage: "Connecting your stories to your tattoo with peace & precision. Share your ink journey on Google.",
+  logoPath: "/assets/bhikshu-logo.png",
+  primaryColor: "#4A554D",
+  accentColor: "#FAF9F5",
+  googleReviewUrl: "https://www.google.com/maps/place/Bhikshu+Tattoo+Studio+%7C+Best+tattoo+studio+in+pune/@18.5654478,73.9105924,112m/data=!3m1!1e3!4m8!3m7!1s0x3bc2c15ecc1b8797:0x315b9b1fa5949c21!8m2!3d18.5654477!4d73.9109004!9m1!1b1!16s%2Fg%2F11qnttbv42?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+  googleMapsUrl: "https://maps.app.goo.gl/ZWi4gTXhM4aZ4pS79",
+  websiteUrl: "https://www.bhikshutattoostudio.com/",
+  facebookUrl: "https://www.facebook.com/Sandy.Bhikshu",
+  instagram1: "https://www.instagram.com/bhikshu_tattoo/",
+  instagram1Label: "@bhikshu_tattoo",
+  instagram2: "https://www.instagram.com/bhikshutattoo/",
+  instagram2Label: "@bhikshutattoo",
+  phone: "+91 96899 76453",
+  whatsapp: "919689976453",
+  email: "bhikshutattoo.gmb@gmail.com",
+  address: "Lane No.12, Row House 3, Konark Nagar, CCD Chowk, opp. Udaan Bio-Diversity Park, Viman Nagar, Pune, Maharashtra 411014",
+  rating: 5.0,
+  reviewCount: 403,
+  courseOptions: [
+    "Custom Tattoo Design",
+    "Realism & Portraits",
+    "Mandala & Fine Line",
+    "Tribal & Maori",
+    "Black & Grey",
+    "Script & Lettering",
+    "Sculpture Tattoo",
+    "Body Piercing"
+  ],
+  highlightOptions: [
+    "100% Sterile & Hygiene First",
+    "Incredibly Fine Lines",
+    "Peaceful Studio Ambience",
+    "Patient & Gentle Artists",
+    "Meaningful Custom Design",
+    "Clear Aftercare Guidance",
+    "Transparent Pricing"
   ],
   isDemo: false,
 };

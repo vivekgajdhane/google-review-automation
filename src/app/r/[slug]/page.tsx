@@ -205,11 +205,11 @@ export default function PublicBusinessPage({
 VERSION:3.0
 FN:${business.name}
 ORG:${business.name}
-TEL;TYPE=WORK,VOICE:${business.phone || "+918605601030"}
-EMAIL:info@phoenix-tech.in
+TEL;TYPE=WORK,VOICE:${business.phone || "+91 96899 76453"}
+EMAIL:${business.email || (business.slug === "bhikshu-tattoo" ? "bhikshutattoo.gmb@gmail.com" : "info@phoenix-tech.in")}
 URL:${business.websiteUrl || "https://phoenix-tech.in"}
-ADR;TYPE=WORK:;;${business.address || "Hadapsar, Pune"};Pune;Maharashtra;411028;India
-NOTE:${business.tagline || "Computer Training & Skill Development"}
+ADR;TYPE=WORK:;;${business.address || "Pune, Maharashtra"};Pune;Maharashtra;411014;India
+NOTE:${business.tagline || "Smart Customer Review & Connect Hub"}
 END:VCARD`;
 
     const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
@@ -246,8 +246,8 @@ END:VCARD`;
 
   return (
     <div 
-      className="min-h-screen text-[#08210d] flex flex-col items-center justify-start p-4 sm:p-6 antialiased font-sans transition-colors"
-      style={{ backgroundColor: accentColor }}
+      className="min-h-screen flex flex-col items-center justify-start p-4 sm:p-6 antialiased font-sans transition-colors"
+      style={{ backgroundColor: accentColor, color: business.slug === "phoenix-tech" ? "#08210d" : "#1c221e" }}
     >
       {/* Toast Notification */}
       {toastMessage && (
@@ -263,23 +263,29 @@ END:VCARD`;
       {/* Main Container */}
       <main className="w-full max-w-md mx-auto space-y-5 pb-12 pt-2">
         {/* Top Header Card */}
-        <div className="relative overflow-hidden rounded-[28px] bg-white border-2 border-[#045d17]/20 p-6 text-center shadow-xl shadow-[#045d17]/5">
+        <div 
+          className="relative overflow-hidden rounded-[28px] bg-white border-2 p-6 text-center shadow-xl"
+          style={{ borderColor: `${primaryColor}25` }}
+        >
           {/* Subtle Accent Glow */}
-          <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#045d17]/10 rounded-full blur-3xl pointer-events-none" />
+          <div 
+            className="absolute -top-20 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full blur-3xl pointer-events-none"
+            style={{ backgroundColor: `${primaryColor}15` }}
+          />
 
           {/* Logo / Brand Header */}
           <div className="relative flex flex-col items-center">
             {business.logoPath ? (
               <div 
-                className="relative w-24 h-24 mb-3 rounded-2xl overflow-hidden bg-white border shadow-md p-1.5 flex items-center justify-center"
+                className="relative h-20 w-full max-w-[240px] mb-3 rounded-2xl overflow-hidden bg-white border shadow-md p-2 flex items-center justify-center"
                 style={{ borderColor: `${primaryColor}30` }}
               >
                 <Image
                   src={business.logoPath}
                   alt={business.name}
-                  width={96}
-                  height={96}
-                  className="object-contain w-full h-full"
+                  width={220}
+                  height={76}
+                  className="object-contain max-h-16 w-auto"
                   priority
                   unoptimized
                 />
@@ -300,7 +306,7 @@ END:VCARD`;
               {business.name}
             </h1>
 
-            <p className="mt-1 text-xs text-[#08210d]/80 font-semibold tracking-wide">
+            <p className="mt-1 text-xs text-slate-700 font-semibold tracking-wide">
               {business.tagline || `${business.category || "Business"} • Pune`}
             </p>
 
@@ -314,11 +320,11 @@ END:VCARD`;
                   <Star key={i} className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
                 ))}
               </div>
-              <span className="font-extrabold" style={{ color: primaryColor }}>{business.rating || 4.9}</span>
-              <span className="text-[#08210d]/70 font-medium">({business.reviewCount || "140+"} Google Reviews)</span>
+              <span className="font-extrabold" style={{ color: primaryColor }}>{business.rating || 5.0}</span>
+              <span className="text-slate-600 font-medium">({business.reviewCount || "400+"} Google Reviews)</span>
             </div>
 
-            <p className="mt-3 text-xs text-[#08210d]/80 leading-relaxed max-w-xs font-medium">
+            <p className="mt-3 text-xs text-slate-700 leading-relaxed max-w-xs font-medium">
               {business.welcomeMessage}
             </p>
           </div>
@@ -344,7 +350,7 @@ END:VCARD`;
                 >
                   AI Review Assistant
                 </h2>
-                <p className="text-[11px] text-[#08210d]/70 font-medium">
+                <p className="text-[11px] text-slate-600 font-medium">
                   Not sure what to write? Build in 5 seconds
                 </p>
               </div>
@@ -364,7 +370,11 @@ END:VCARD`;
                 className="text-[11px] font-bold uppercase tracking-wider block"
                 style={{ color: primaryColor }}
               >
-                1. Select Course / Program
+                {business.category?.toLowerCase().includes("tattoo") 
+                  ? "1. Select Tattoo Style / Service"
+                  : business.category?.toLowerCase().includes("dental") || business.category?.toLowerCase().includes("clinic")
+                  ? "1. Select Treatment / Service"
+                  : "1. Select Course / Program"}
               </label>
               <div className="flex flex-wrap gap-1.5">
                 {business.courseOptions.map((course) => {

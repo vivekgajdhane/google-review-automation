@@ -10,8 +10,252 @@ export interface ReviewGenerationParams {
 
 export function generateReviewDraft(params: ReviewGenerationParams): string {
   const { businessName, course, highlights, language } = params;
+  const isTattoo =
+    businessName.toLowerCase().includes("tattoo") ||
+    (course && /tattoo|piercing|mandala|realism|ink/i.test(course)) ||
+    highlights.some((h) => /sterile|line|artist|peaceful|hygiene|ink/i.test(h));
 
-  // English generator
+  const pickRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+
+  // =========================================================================
+  // 1. TATTOO STUDIO NICHE GENERATOR (Bhikshu Tattoo & Zen/Peace Ink Experience)
+  // =========================================================================
+  if (isTattoo) {
+    if (language === "en") {
+      const openings = [
+        `Got my ${course || "custom tattoo"} done at ${businessName} and the experience was truly exceptional!`,
+        `Such a peaceful, welcoming vibe at ${businessName}! Truly one of the finest tattoo studios in Pune.`,
+        `I got inked at ${businessName} in Viman Nagar and couldn't be happier with how my tattoo turned out.`,
+        `If you are looking for meaningful art and a peaceful, sterile session, ${businessName} is the absolute best.`,
+        `Had a wonderful inking experience at ${businessName}—peace of mind, precision, and incredible art.`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "100% Sterile & Hygiene First": [
+          "The studio follows strict sterilization protocols with fresh single-use needles unsealed right in front of you.",
+          "Extremely clean and hygienic setup which gave me complete confidence and peace of mind."
+        ],
+        "Incredibly Fine Lines": [
+          "The line work and detailing are super sharp, neat, and extraordinarily precise.",
+          "Masterful execution on fine lines and shading—the finished art looks stunning and healed beautifully."
+        ],
+        "Peaceful Studio Ambience": [
+          "The studio has a calm, meditative energy that makes the entire inking process gentle and relaxing.",
+          "A serene sanctuary with soothing vibes where you can truly connect your story to your tattoo."
+        ],
+        "Patient & Gentle Artists": [
+          "The artists are so patient, gentle, and ensure you remain completely comfortable throughout the session.",
+          "They checked in on my comfort regularly and made the whole sitting virtually painless."
+        ],
+        "Meaningful Custom Design": [
+          "They took time to understand my story and created a personalized custom sketch tailored exactly to what I imagined.",
+          "Patient consultation where my rough concept was transformed into a deeply meaningful piece of art."
+        ],
+        "Clear Aftercare Guidance": [
+          "Provided clear instructions and healing guidance for smooth, hassle-free aftercare.",
+          "Detailed post-tattoo care advice ensured my tattoo healed with vibrant, crisp color retention."
+        ],
+        "Transparent Pricing": [
+          "Fair, upfront pricing with no hidden charges for such world-class quality craftsmanship.",
+          "Complete transparency in consultation and pricing—truly honest artists."
+        ]
+      };
+
+      const conclusions = [
+        "Already planning my next piece with them! 10/10 recommendation.",
+        "Best tattoo studio in Viman Nagar and Pune. Highly recommended!",
+        "Huge respect to the team at " + businessName + " for such wonderful artistry and peace.",
+        "Worth every rupee. Truly connects your story to your ink!"
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+
+    if (language === "hinglish") {
+      const courseText = course ? `${course} ke liye ` : "";
+      const openings = [
+        `${businessName} me mera tattoo session sach me bahut peaceful aur shandar raha!`,
+        `Maine ${courseText}${businessName} select kiya aur ye mera ab tak ka sabse best tattoo experience tha.`,
+        `Viman Nagar me custom tattoo banwane ke liye ${businessName} se behtar studio koi nahi hai.`,
+        `Bahut hi calm, peaceful aur hygienic studio hai, tattoo finishing aur vibe dono top-class hain.`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "100% Sterile & Hygiene First": [
+          "Hygiene ka 100% dhyan rakha jata hai, fresh sterile needles mere samne open kiye gaye.",
+          "Studio ekdum clean aur hygienic hai, safely tattoo banwane ke liye best place."
+        ],
+        "Incredibly Fine Lines": [
+          "Fine lines aur shading work itna clean hai ki tattoo ka look ekdum lifelike lag raha hai.",
+          "Detailing aur finishing lajawab hai, har ek line bilkul sharp aur neat aayi hai."
+        ],
+        "Peaceful Studio Ambience": [
+          "Studio ka vibe bohot shant aur positive hai, tattoo banwate waqt bilkul anxiety ya dar nahi laga.",
+          "Ekdum calm aur relaxing environment hai, aaram se poora session complete hua."
+        ],
+        "Patient & Gentle Artists": [
+          "Artists ka nature bohot humble aur patient hai, pain ka poora dhyan rakhte hain.",
+          "Artist ne bohot gently handle kiya aur baar-baar comfort check kiya."
+        ],
+        "Meaningful Custom Design": [
+          "Meri thought aur story ko patiently sunke ekdum personalized design sketch kiya.",
+          "Mere concept ko itni sundar custom art me convert kiya jo mere dil ke behad kareeb hai."
+        ],
+        "Clear Aftercare Guidance": [
+          "Tattoo healing aur aftercare ke baare me sab kuch step-by-step samjhaya.",
+          "Proper aftercare routine batayi jisse tattoo bilkul smoothly heal ho gaya."
+        ],
+        "Transparent Pricing": [
+          "Pricing bilkul fair aur transparent hai, world-class quality ke samne poora value for money hai.",
+          "No hidden charges, honest consultation aur genuine pricing mila."
+        ]
+      };
+
+      const conclusions = [
+        "Pune me tattoo lovers ko yaha zaroor aana chahiye! Highly recommended.",
+        "Thank you " + businessName + " team for this beautiful ink! 5 stars!",
+        "Next tattoo bhi pakka yahi se banwaunga. Fantastic experience!",
+        "100% satisfied with the artwork. Keep it up!"
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+
+    if (language === "hi") {
+      const courseText = course ? `${course} के लिए ` : "";
+      const openings = [
+        `${businessName} में टैटू बनवाने का मेरा अनुभव अत्यंत शांत, सुखद और यादगार रहा।`,
+        `विमान नगर, पुणे में अर्थपूर्ण और उत्तम कलाकारी के लिए ${businessName} सबसे बेहतरीन टैटू स्टूडियो है।`,
+        `मैंने ${courseText}${businessName} में टैटू बनवाया और इसकी फिनिशिंग देखकर मन प्रसन्न हो गया।`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "100% Sterile & Hygiene First": [
+          "यहाँ स्वच्छता और स्वच्छता के नियमों का शत-प्रतिशत पालन किया जाता है, नई सुइयां सामने खोली जाती हैं।",
+          "स्टूडियो अत्यंत साफ-सुथरा और सुरक्षित है, जिससे पूरा भरोसा मिलता है।"
+        ],
+        "Incredibly Fine Lines": [
+          "बारीक रेखाओं और शेडिंग का काम बहुत ही सटीक और शानदार तरीके से किया गया है।",
+          "टैटू की डिटेलिंग बहुत ही खूबसूरत और जीवंत दिखती है।"
+        ],
+        "Peaceful Studio Ambience": [
+          "स्टूडियो का वातावरण बहुत ही शांत, सकारात्मक और ध्यानमग्न है।",
+          "यहाँ का शांत माहौल टैटू बनवाते समय मन को पूरी तरह सुकून देता है।"
+        ],
+        "Patient & Gentle Artists": [
+          "यहाँ के कलाकार अत्यंत धैर्यवान, विनम्र और अपने काम में निपुण हैं।",
+          "उन्होंने पूरी प्रक्रिया के दौरान आराम का पूरा ध्यान रखा और दर्द बिल्कुल महसूस नहीं होने दिया।"
+        ],
+        "Meaningful Custom Design": [
+          "उन्होंने मेरी भावना को समझकर एक बहुत ही सुंदर और अनूठा कस्टम डिजाइन तैयार किया।",
+          "विचारों को इतनी सुंदर कला में ढालने के लिए विशेष धन्यवाद।"
+        ],
+        "Clear Aftercare Guidance": [
+          "टैटू की देखभाल और हीलिंग के लिए बहुत ही स्पष्ट और उपयोगी निर्देश दिए गए।",
+          "आफ्टरकेयर के सही मार्गदर्शन से टैटू बहुत अच्छे से ठीक हो गया।"
+        ],
+        "Transparent Pricing": [
+          "काम की उच्च गुणवत्ता को देखते हुए शुल्क बिल्कुल उचित और पारदर्शी है।",
+          "किसी भी तरह का कोई छिपा हुआ शुल्क नहीं है।"
+        ]
+      };
+
+      const conclusions = [
+        "पुणे के सभी टैटू प्रेमियों के लिए यह स्टूडियो अत्यधिक अनुशंसित है!",
+        "इस खूबसूरत कला के लिए पूरी टीम का हार्दिक धन्यवाद।",
+        "५ में से ५ स्टार! अद्भुत अनुभव।"
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+
+    // Marathi for Bhikshu Tattoo (Local Pune / Viman Nagar vibe)
+    const courseText = course ? `${course} साठी ` : "";
+    const openings = [
+      `${businessName} मध्ये टॅटू काढण्याचा माझा अनुभव अत्यंत शांत, सुखद आणि समाधानकारक होता!`,
+      `विमान नगर, पुणे मधील सर्वोत्कृष्ट आणि अत्यंत हायजिनिक टॅटू स्टुडिओ म्हणजे ${businessName}.`,
+      `मी ${courseText}${businessName} ची निवड केली, आणि टॅटूची फिनिशिंग खरोखर अप्रतिम आली आहे.`
+    ];
+
+    const highlightMap: Record<string, string[]> = {
+      "100% Sterile & Hygiene First": [
+        "येथे हायजिन आणि स्वच्छतेची १००% काळजी घेतली जाते, नवीन स्टेरिलाईज्ड सुया समोरच उघडल्या जातात.",
+        "अत्यंत स्वच्छ आणि सुरक्षित वातावरण असल्यामुळे पूर्ण विश्वास बसतो."
+      ],
+      "Incredibly Fine Lines": [
+        "फाईन लाईन्स आणि शेडिंगचे काम अतिशय बारकाईने आणि सुबक केले आहे.",
+        "डिटेलिंग इतकी छान आहे की टॅटू अत्यंत देखणा आणि उठावदार दिसतो."
+      ],
+      "Peaceful Studio Ambience": [
+        "स्टुडिओमधील वातावरण अतिशय शांत, प्रसन्न आणि पॉझिटिव्ह आहे.",
+        "अगदी शांत वातावरणात कुठलाही ताण न घेता टॅटू सेशन पूर्ण झाले."
+      ],
+      "Patient & Gentle Artists": [
+        "आर्टिस्ट खूप नम्र, संयमी आणि अनुभवी आहेत, त्रास होणार नाही याची पूर्ण काळजी घेतात.",
+        "अगदी हळुवारपणे आणि व्यवस्थित लक्ष देऊन त्यांनी टॅटू पूर्ण केला."
+      ],
+      "Meaningful Custom Design": [
+        "माझा विचार आणि कल्पना समजून घेऊन एक सुंदर कस्टम डिझाइन तयार करून दिले.",
+        "माझ्या संकल्पनेला त्यांनी एका सुरेख कलेचे रूप दिले."
+      ],
+      "Clear Aftercare Guidance": [
+        "टॅटू नंतर त्वचेची कशी काळजी घ्यावी याबद्दल सविस्तर आणि योग्य मार्गदर्शन मिळाले.",
+        "आफ्टरकेअरच्या योग्य सल्ल्यामुळे टॅटू खूप छान आणि लवकर बरा झाला."
+      ],
+      "Transparent Pricing": [
+        "अशा उत्कृष्ट दर्ज्याच्या कामासाठी फी एकदम योग्य आणि पारदर्शक आहे.",
+        "कोणतेही छुपे चार्जेस नाहीत, अतिशय प्रामाणिक सल्ला मिळतो."
+      ]
+    };
+
+    const conclusions = [
+      "पुण्यातील प्रत्येकाने स्वतःचा टॅटू बनवण्यासाठी नक्की भेट द्यावी!",
+      "सर्व टीमचे आणि कलाकारांचे मनःपूर्वक आभार! ५ पैकी ५ स्टार.",
+      "पुढचा टॅटू सुद्धा नक्की येथूनच काढणार!"
+    ];
+
+    const opening = pickRandom(openings);
+    const middleParts = highlights
+      .map((h) => {
+        const options = highlightMap[h];
+        return options ? pickRandom(options) : "";
+      })
+      .filter(Boolean)
+      .slice(0, 3);
+    const conclusion = pickRandom(conclusions);
+    return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+  }
+
+  // =========================================================================
+  // 2. EDUCATION / TRAINING INSTITUTE GENERATOR (Phoenix-Tech Academy)
+  // =========================================================================
   if (language === "en") {
     const openings = [
       `Had an amazing learning experience at ${businessName}!`,
@@ -59,10 +303,9 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
       "Truly the best training institute in Hadapsar!"
     ];
 
-    const pickRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
     const opening = pickRandom(openings);
     const middleParts = highlights
-      .map(h => {
+      .map((h) => {
         const options = highlightMap[h];
         return options ? pickRandom(options) : "";
       })
@@ -121,10 +364,9 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
       "Mujhe seekhne me bohot maza aaya, thanks a lot!"
     ];
 
-    const pickRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
     const opening = pickRandom(openings);
     const middleParts = highlights
-      .map(h => {
+      .map((h) => {
         const options = highlightMap[h];
         return options ? pickRandom(options) : "";
       })
@@ -181,10 +423,9 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
       "उत्कृष्ट संस्थान और बेहतरीन अनुभव।"
     ];
 
-    const pickRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
     const opening = pickRandom(openings);
     const middleParts = highlights
-      .map(h => {
+      .map((h) => {
         const options = highlightMap[h];
         return options ? pickRandom(options) : "";
       })
@@ -240,10 +481,9 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
     "५ पैकी ५ स्टार! खूप छान अकॅडमी."
   ];
 
-  const pickRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
   const opening = pickRandom(openings);
   const middleParts = highlights
-    .map(h => {
+    .map((h) => {
       const options = highlightMap[h];
       return options ? pickRandom(options) : "";
     })

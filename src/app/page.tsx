@@ -72,22 +72,33 @@ export default function HomePage() {
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link href="/r/phoenix-tech" className="w-full sm:w-auto">
+              <Link href="/r/bhikshu-tattoo" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full gap-2 text-base font-extrabold bg-[#045d17] hover:bg-[#034d13] text-[#fff3d7] rounded-2xl shadow-xl shadow-[#045d17]/20 uppercase tracking-wide h-13 px-8"
+                  className="w-full gap-2 text-base font-extrabold bg-[#4A554D] hover:bg-[#3d463f] text-white rounded-2xl shadow-xl shadow-[#4A554D]/25 uppercase tracking-wide h-13 px-8"
                 >
-                  Try Phoenix Tech Mobile Flow <ArrowRight className="h-5 w-5" />
+                  Bhikshu Tattoo Mobile Flow <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/qr/phoenix-tech" className="w-full sm:w-auto">
+              <Link href="/qr/bhikshu-tattoo" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full gap-2 text-base font-extrabold border-2 border-[#045d17]/30 bg-white hover:bg-[#fff9ea] text-[#045d17] rounded-2xl h-13 px-8"
+                  className="w-full gap-2 text-base font-extrabold border-2 border-[#4A554D]/40 bg-white hover:bg-[#FAF9F5] text-[#4A554D] rounded-2xl h-13 px-8"
                 >
-                  Custom Rounded QR Stand <ExternalLink className="h-4 w-4" />
+                  Bhikshu QR Stand <ExternalLink className="h-4 w-4" />
                 </Button>
+              </Link>
+            </div>
+
+            {/* Quick switcher badge */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-bold">
+              <span className="text-slate-500 uppercase">Live Pune Profiles:</span>
+              <Link href="/r/bhikshu-tattoo" className="px-3 py-1 rounded-full bg-[#4A554D] text-white hover:opacity-90 transition-opacity">
+                🕉️ Bhikshu Tattoo Studio (5.0 ★ 403 reviews)
+              </Link>
+              <Link href="/r/phoenix-tech" className="px-3 py-1 rounded-full bg-[#045d17] text-[#fff3d7] hover:opacity-90 transition-opacity">
+                💻 Phoenix-Tech Academy (4.9 ★ 140 reviews)
               </Link>
             </div>
 

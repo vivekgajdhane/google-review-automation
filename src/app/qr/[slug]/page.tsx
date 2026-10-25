@@ -202,11 +202,11 @@ export default function DynamicQrStandPage({
             {/* 1. Top: Business Logo Centered */}
             <div className="h-16 w-full flex items-center justify-center mb-1">
               {business.logoPath ? (
-                <div className="relative h-14 w-32 flex items-center justify-center">
+                <div className="relative h-14 w-full max-w-[200px] flex items-center justify-center">
                   <Image
                     src={business.logoPath}
                     alt={business.name}
-                    width={120}
+                    width={180}
                     height={56}
                     className="object-contain max-h-14 w-auto"
                     priority
