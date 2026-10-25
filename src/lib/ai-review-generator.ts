@@ -6,10 +6,11 @@ export interface ReviewGenerationParams {
   highlights: string[];
   language: ReviewLanguage;
   vibe?: "enthusiastic" | "professional" | "concise";
+  artist?: string;
 }
 
 export function generateReviewDraft(params: ReviewGenerationParams): string {
-  const { businessName, course, highlights, language } = params;
+  const { businessName, course, highlights, language, artist } = params;
   const isTattoo =
     businessName.toLowerCase().includes("tattoo") ||
     (course && /tattoo|piercing|mandala|realism|ink/i.test(course)) ||
@@ -22,13 +23,20 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
   // =========================================================================
   if (isTattoo) {
     if (language === "en") {
-      const openings = [
-        `Got my ${course || "custom tattoo"} done at ${businessName} and the experience was truly exceptional!`,
-        `Such a peaceful, welcoming vibe at ${businessName}! Truly one of the finest tattoo studios in Pune.`,
-        `I got inked at ${businessName} in Viman Nagar and couldn't be happier with how my tattoo turned out.`,
-        `If you are looking for meaningful art and a peaceful, sterile session, ${businessName} is the absolute best.`,
-        `Had a wonderful inking experience at ${businessName}—peace of mind, precision, and incredible art.`
-      ];
+      const openings = (artist && artist !== "ALL")
+        ? [
+            `Got my ${course || "custom tattoo"} done by ${artist} at ${businessName} and the experience was truly exceptional!`,
+            `Huge shoutout to ${artist} at ${businessName} in Viman Nagar! The line work and attention to detail are next-level.`,
+            `Had a wonderful inking session with ${artist} at ${businessName}—peace of mind, precision, and incredible art.`,
+            `${artist} at ${businessName} took the time to understand my vision and turned it into a breathtaking piece of art.`
+          ]
+        : [
+            `Got my ${course || "custom tattoo"} done at ${businessName} and the experience was truly exceptional!`,
+            `Such a peaceful, welcoming vibe at ${businessName}! Truly one of the finest tattoo studios in Pune.`,
+            `I got inked at ${businessName} in Viman Nagar and couldn't be happier with how my tattoo turned out.`,
+            `If you are looking for meaningful art and a peaceful, sterile session, ${businessName} is the absolute best.`,
+            `Had a wonderful inking experience at ${businessName}—peace of mind, precision, and incredible art.`
+          ];
 
       const highlightMap: Record<string, string[]> = {
         "100% Sterile & Hygiene First": [
@@ -82,12 +90,18 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
 
     if (language === "hinglish") {
       const courseText = course ? `${course} ke liye ` : "";
-      const openings = [
-        `${businessName} me mera tattoo session sach me bahut peaceful aur shandar raha!`,
-        `Maine ${courseText}${businessName} select kiya aur ye mera ab tak ka sabse best tattoo experience tha.`,
-        `Viman Nagar me custom tattoo banwane ke liye ${businessName} se behtar studio koi nahi hai.`,
-        `Bahut hi calm, peaceful aur hygienic studio hai, tattoo finishing aur vibe dono top-class hain.`
-      ];
+      const openings = (artist && artist !== "ALL")
+        ? [
+            `${businessName} me ${artist} sir se apna tattoo karwaya, experience sach me shandar aur peaceful raha!`,
+            `Huge shoutout to ${artist} at ${businessName}! Detailing aur fine line work bilkul flawless kiya hai.`,
+            `Maine ${businessName} me ${artist} se custom tattoo banwaya aur finishing ekdum top-class aayi hai.`
+          ]
+        : [
+            `${businessName} me mera tattoo session sach me bahut peaceful aur shandar raha!`,
+            `Maine ${courseText}${businessName} select kiya aur ye mera ab tak ka sabse best tattoo experience tha.`,
+            `Viman Nagar me custom tattoo banwane ke liye ${businessName} se behtar studio koi nahi hai.`,
+            `Bahut hi calm, peaceful aur hygienic studio hai, tattoo finishing aur vibe dono top-class hain.`
+          ];
 
       const highlightMap: Record<string, string[]> = {
         "100% Sterile & Hygiene First": [
@@ -141,11 +155,16 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
 
     if (language === "hi") {
       const courseText = course ? `${course} के लिए ` : "";
-      const openings = [
-        `${businessName} में टैटू बनवाने का मेरा अनुभव अत्यंत शांत, सुखद और यादगार रहा।`,
-        `विमान नगर, पुणे में अर्थपूर्ण और उत्तम कलाकारी के लिए ${businessName} सबसे बेहतरीन टैटू स्टूडियो है।`,
-        `मैंने ${courseText}${businessName} में टैटू बनवाया और इसकी फिनिशिंग देखकर मन प्रसन्न हो गया।`
-      ];
+      const openings = (artist && artist !== "ALL")
+        ? [
+            `${businessName} में ${artist} जी से टैटू बनवाया और अनुभव वाकई अद्भुत और शांतिपूर्ण रहा।`,
+            `${businessName} के आर्टिस्ट ${artist} का काम और रेखाओं की बारीकी बेहद प्रशंसनीय है।`
+          ]
+        : [
+            `${businessName} में टैटू बनवाने का मेरा अनुभव अत्यंत शांत, सुखद और यादगार रहा।`,
+            `विमान नगर, पुणे में अर्थपूर्ण और उत्तम कलाकारी के लिए ${businessName} सबसे बेहतरीन टैटू स्टूडियो है।`,
+            `मैंने ${courseText}${businessName} में टैटू बनवाया और इसकी फिनिशिंग देखकर मन प्रसन्न हो गया।`
+          ];
 
       const highlightMap: Record<string, string[]> = {
         "100% Sterile & Hygiene First": [
