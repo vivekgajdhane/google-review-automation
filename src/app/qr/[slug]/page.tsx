@@ -68,6 +68,7 @@ export default function DynamicQrStandPage({
     }
   }, []);
 
+  const [standTheme, setStandTheme] = React.useState<"white" | "stone">("white");
   const [qrColorChoice, setQrColorChoice] = React.useState<"black" | "brand">("black");
   const [qrStyle, setQrStyle] = React.useState<"classic" | "rounded">("classic");
 
@@ -75,6 +76,11 @@ export default function DynamicQrStandPage({
   const [downloading, setDownloading] = React.useState(false);
   const [copiedLink, setCopiedLink] = React.useState(false);
   const [activeUrl, setActiveUrl] = React.useState<string>("");
+
+  const isBhikshu = slug === "bhikshu-tattoo";
+  const logoToDisplay = isBhikshu
+    ? (standTheme === "white" ? "/assets/bhikshu-emblem.png" : "/assets/bhikshu-emblem-white.png")
+    : business.logoPath;
 
   // Determine active scan URL & generate QR
   React.useEffect(() => {
@@ -100,7 +106,7 @@ export default function DynamicQrStandPage({
       dotColor: activeDotColor,
       eyeColor: activeDotColor,
       bgColor: "#ffffff",
-      logoUrl: undefined, // Match exact photo: clean QR with logo at top of stand
+      logoUrl: undefined, // Clean QR with logo at top of stand
       logoSizeRatio: 0,
       style: qrStyle,
     });
@@ -194,17 +200,21 @@ export default function DynamicQrStandPage({
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
         {/* Left Column: Exact Physical Stand Replica */}
         <div className="lg:col-span-6 flex flex-col items-center">
-          {/* Acrylic Stand Card (Exactly matching user sample photo) */}
+          {/* Acrylic Stand Card (Supports White & Zen Stone Finish) */}
           <div
             id="print-stand"
-            className="w-[310px] sm:w-[340px] bg-white border border-slate-200/90 rounded-[28px] px-6 py-8 text-center shadow-2xl relative flex flex-col items-center justify-between print:shadow-none print:m-0 print:border-none print:w-full print:max-w-[360px]"
+            className={`w-[310px] sm:w-[340px] rounded-[28px] px-6 py-8 text-center shadow-2xl relative flex flex-col items-center justify-between transition-all duration-300 print:shadow-none print:m-0 print:border-none print:w-full print:max-w-[360px] ${
+              standTheme === "stone"
+                ? "bg-[#1F2723] border border-[#3A463E] text-white"
+                : "bg-white border border-slate-200/90 text-slate-900"
+            }`}
           >
             {/* 1. Top: Business Logo Centered */}
             <div className="h-16 w-full flex items-center justify-center mb-1">
-              {business.logoPath ? (
+              {logoToDisplay ? (
                 <div className="relative h-14 w-full max-w-[200px] flex items-center justify-center">
                   <Image
-                    src={business.logoPath}
+                    src={logoToDisplay}
                     alt={business.name}
                     width={180}
                     height={56}
@@ -227,9 +237,15 @@ export default function DynamicQrStandPage({
             <div className="w-[230px] h-[230px] sm:w-[250px] sm:h-[250px] flex items-center justify-center my-1">
               {qrSvg ? (
                 <div
-                  dangerouslySetInnerHTML={{ __html: qrSvg }}
-                  className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-                />
+                  className={`flex items-center justify-center ${
+                    standTheme === "stone" ? "bg-white p-3 rounded-2xl shadow-inner w-full h-full" : "w-full h-full"
+                  }`}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{ __html: qrSvg }}
+                    className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
+                  />
+                </div>
               ) : (
                 <div className="text-xs text-slate-400 font-medium">Generating QR...</div>
               )}
@@ -241,11 +257,22 @@ export default function DynamicQrStandPage({
 
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#FBBC04] text-[#FBBC04]" />
+                  <Star
+                    key={i}
+                    className={`w-4 h-4 ${
+                      standTheme === "stone"
+                        ? "fill-[#E0A93B] text-[#E0A93B]"
+                        : "fill-[#FBBC04] text-[#FBBC04]"
+                    }`}
+                  />
                 ))}
               </div>
 
-              <p className="text-slate-800 text-[12px] sm:text-[13px] font-normal leading-snug text-center tracking-tight pt-0.5">
+              <p
+                className={`text-[12px] sm:text-[13px] font-normal leading-snug text-center tracking-tight pt-0.5 ${
+                  standTheme === "stone" ? "text-slate-100 font-dm" : "text-slate-800 font-sans"
+                }`}
+              >
                 Scan the QR code above, to leave<br />us a review.
               </p>
             </div>
@@ -259,6 +286,48 @@ export default function DynamicQrStandPage({
 
         {/* Right Column: Clean Controls & Live Mobile URL */}
         <div className="lg:col-span-6 space-y-5 print:hidden">
+          {/* Stand Finish Selector */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+              <Palette className="w-3.5 h-3.5 text-slate-400" />
+              <span>Stand Finish / Paper Theme</span>
+            </h3>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => setStandTheme("white")}
+                className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                  standTheme === "white"
+                    ? "border-slate-800 bg-slate-50 text-slate-900 ring-2 ring-slate-800/20 shadow-sm"
+                    : "border-slate-200 hover:border-slate-300 bg-white text-slate-700"
+                }`}
+              >
+                <div className="w-5 h-5 rounded-full bg-white border border-slate-300 shadow-xs mb-1.5 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-slate-800" />
+                </div>
+                <div className="text-xs font-bold">Classic White Acrylic</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">High-contrast for office & color printing</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setStandTheme("stone")}
+                className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                  standTheme === "stone"
+                    ? "border-slate-800 bg-slate-50 text-slate-900 ring-2 ring-slate-800/20 shadow-sm"
+                    : "border-slate-200 hover:border-slate-300 bg-white text-slate-700"
+                }`}
+              >
+                <div className="w-5 h-5 rounded-full bg-[#1F2723] border border-[#3A463E] shadow-xs mb-1.5 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#9C7A3C]" />
+                </div>
+                <div className="text-xs font-bold">Zen Stone Slate</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">Dark charcoal matching studio decor</div>
+              </button>
+            </div>
+          </div>
+
           {/* Print & Download Bar */}
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
