@@ -43,8 +43,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["'League Spartan'", "system-ui", "-apple-system", "sans-serif"],
-        spartan: ["'League Spartan'", "sans-serif"],
+        sora: ["'Sora'", "system-ui", "-apple-system", "sans-serif"],
+        dm: ["'DM Sans'", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["'DM Sans'", "'Sora'", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },
