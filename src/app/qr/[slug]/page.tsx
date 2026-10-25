@@ -68,9 +68,9 @@ export default function DynamicQrStandPage({
     }
   }, []);
 
-  const [standTheme, setStandTheme] = React.useState<"white" | "stone">("white");
+  const [standTheme, setStandTheme] = React.useState<"white" | "stone">("stone");
   const [qrColorChoice, setQrColorChoice] = React.useState<"black" | "brand">("black");
-  const [qrStyle, setQrStyle] = React.useState<"classic" | "rounded">("classic");
+  const [qrStyle, setQrStyle] = React.useState<"classic" | "rounded">("rounded");
 
   const [qrSvg, setQrSvg] = React.useState<string>("");
   const [downloading, setDownloading] = React.useState(false);
@@ -203,11 +203,20 @@ export default function DynamicQrStandPage({
           {/* Acrylic Stand Card (Supports White & Zen Stone Finish) */}
           <div
             id="print-stand"
-            className={`w-[310px] sm:w-[340px] rounded-[28px] px-6 py-8 text-center shadow-2xl relative flex flex-col items-center justify-between transition-all duration-300 print:shadow-none print:m-0 print:border-none print:w-full print:max-w-[360px] ${
+            className={`w-[310px] sm:w-[340px] rounded-[32px] px-6 py-8 text-center shadow-2xl relative flex flex-col items-center justify-between transition-all duration-300 print:shadow-none print:m-0 print:border-none print:w-full print:max-w-[360px] overflow-hidden ${
               standTheme === "stone"
-                ? "bg-[#1F2723] border border-[#3A463E] text-white"
+                ? "border border-[#3A463E] text-white"
                 : "bg-white border border-slate-200/90 text-slate-900"
             }`}
+            style={
+              standTheme === "stone"
+                ? {
+                    backgroundImage: `radial-gradient(circle at 50% 12%, rgba(60, 71, 63, 0.42) 0%, rgba(28, 34, 30, 0.95) 100%), url('/assets/bhikshu-stone-bg.jpg')`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }
+                : undefined
+            }
           >
             {/* 1. Top: Business Logo Centered */}
             <div className="h-16 w-full flex items-center justify-center mb-1">
@@ -218,7 +227,7 @@ export default function DynamicQrStandPage({
                     alt={business.name}
                     width={180}
                     height={56}
-                    className="object-contain max-h-14 w-auto"
+                    className="object-contain max-h-14 w-auto select-none"
                     priority
                     unoptimized
                   />
@@ -234,16 +243,18 @@ export default function DynamicQrStandPage({
             </div>
 
             {/* 2. Center: Large, High-Contrast Scannable QR Code */}
-            <div className="w-[230px] h-[230px] sm:w-[250px] sm:h-[250px] flex items-center justify-center my-1">
+            <div className="w-[230px] h-[230px] sm:w-[250px] sm:h-[250px] flex items-center justify-center my-1.5">
               {qrSvg ? (
                 <div
-                  className={`flex items-center justify-center ${
-                    standTheme === "stone" ? "bg-white p-3 rounded-2xl shadow-inner w-full h-full" : "w-full h-full"
+                  className={`flex items-center justify-center w-full h-full ${
+                    standTheme === "stone"
+                      ? "bg-white p-3 sm:p-3.5 rounded-[26px] shadow-xl ring-1 ring-black/5"
+                      : "bg-white p-1 rounded-2xl"
                   }`}
                 >
                   <div
                     dangerouslySetInnerHTML={{ __html: qrSvg }}
-                    className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
+                    className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:rounded-[18px]"
                   />
                 </div>
               ) : (
@@ -259,18 +270,14 @@ export default function DynamicQrStandPage({
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-4 h-4 ${
-                      standTheme === "stone"
-                        ? "fill-[#E0A93B] text-[#E0A93B]"
-                        : "fill-[#FBBC04] text-[#FBBC04]"
-                    }`}
+                    className="w-4 h-4 fill-[#FBBC04] text-[#FBBC04]"
                   />
                 ))}
               </div>
 
               <p
                 className={`text-[12px] sm:text-[13px] font-normal leading-snug text-center tracking-tight pt-0.5 ${
-                  standTheme === "stone" ? "text-slate-100 font-dm" : "text-slate-800 font-sans"
+                  standTheme === "stone" ? "text-white font-dm" : "text-slate-800 font-sans"
                 }`}
               >
                 Scan the QR code above, to leave<br />us a review.
@@ -484,6 +491,34 @@ export default function DynamicQrStandPage({
                   style={qrColorChoice === "brand" ? { backgroundColor: primaryColor } : {}}
                 >
                   Brand Primary Color
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-xs font-medium text-slate-600 pt-2 border-t border-slate-100">
+              <span>QR Module Shape:</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setQrStyle("rounded")}
+                  className={`px-3 py-1 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
+                    qrStyle === "rounded"
+                      ? "bg-slate-900 text-white border-slate-900 shadow-sm"
+                      : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                  }`}
+                >
+                  Rounded (Perfect Modern)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setQrStyle("classic")}
+                  className={`px-3 py-1 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
+                    qrStyle === "classic"
+                      ? "bg-slate-900 text-white border-slate-900 shadow-sm"
+                      : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                  }`}
+                >
+                  Classic Square
                 </button>
               </div>
             </div>

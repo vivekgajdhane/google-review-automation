@@ -81,14 +81,14 @@ export function generateRoundedQrSvg(options: RoundedQrOptions): string {
           // rounded (default) - high fill rounded rectangle for 100% scan rate + modern aesthetics
           const pad = cellSize * 0.04;
           const mSize = cellSize * 0.92;
-          const mRadius = cellSize * 0.24;
+          const mRadius = cellSize * 0.38;
           paths += `<rect x="${(x + pad).toFixed(2)}" y="${(y + pad).toFixed(2)}" width="${mSize.toFixed(2)}" height="${mSize.toFixed(2)}" rx="${mRadius.toFixed(2)}" fill="${dotColor}" />\n`;
         }
       }
     }
   }
 
-  // Draw finder pattern with ISO-compliant ratios (7:5:3)
+  // Draw finder pattern with ISO-compliant ratios (7:5:3) with smooth aesthetic rounding
   const drawFinder = (moduleCol: number, moduleRow: number) => {
     const x = (moduleCol + margin) * cellSize;
     const y = (moduleRow + margin) * cellSize;
@@ -98,15 +98,16 @@ export function generateRoundedQrSvg(options: RoundedQrOptions): string {
     const pupilOffset = 2 * cellSize;
     const pupilSize = 3 * cellSize;
 
-    // Corner radius: subtle rounding that keeps the 1:1:3:1:1 optical ratio intact
-    const outerRadius = style === "classic" ? 0 : cellSize * 0.6;
-    const pupilRadius = style === "classic" ? 0 : cellSize * 0.4;
+    // Corner radius: smooth rounding that preserves standard optical scanner readability
+    const outerRadius = style === "classic" ? 0 : outerSize * 0.24;
+    const innerRadius = style === "classic" ? 0 : innerHoleSize * 0.20;
+    const pupilRadius = style === "classic" ? 0 : pupilSize * 0.26;
 
     return `
       <!-- Finder Outer 7x7 -->
       <rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${outerSize.toFixed(2)}" height="${outerSize.toFixed(2)}" rx="${outerRadius.toFixed(2)}" fill="${eyeColor}" />
       <!-- Finder Inner Clear 5x5 -->
-      <rect x="${(x + innerHoleOffset).toFixed(2)}" y="${(y + innerHoleOffset).toFixed(2)}" width="${innerHoleSize.toFixed(2)}" height="${innerHoleSize.toFixed(2)}" fill="${bgColor}" />
+      <rect x="${(x + innerHoleOffset).toFixed(2)}" y="${(y + innerHoleOffset).toFixed(2)}" width="${innerHoleSize.toFixed(2)}" height="${innerHoleSize.toFixed(2)}" rx="${innerRadius.toFixed(2)}" fill="${bgColor}" />
       <!-- Finder Pupil 3x3 -->
       <rect x="${(x + pupilOffset).toFixed(2)}" y="${(y + pupilOffset).toFixed(2)}" width="${pupilSize.toFixed(2)}" height="${pupilSize.toFixed(2)}" rx="${pupilRadius.toFixed(2)}" fill="${dotColor}" />
     `;
@@ -137,7 +138,7 @@ export function generateRoundedQrSvg(options: RoundedQrOptions): string {
 
   return `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
-      <rect width="${size}" height="${size}" rx="20" fill="${bgColor}" />
+      <rect width="${size}" height="${size}" rx="28" fill="${bgColor}" />
       ${finders}
       ${paths}
       ${logoSvg}
