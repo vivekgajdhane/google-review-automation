@@ -153,16 +153,31 @@ END:VCARD`;
 
       {/* Main Container matching Sample Interface */}
       <main className="w-full max-w-[410px] mx-auto flex flex-col items-center space-y-5 py-6">
-        {/* 1. Official Logo Centered (Clean, unboxed) */}
-        <div className="relative h-16 w-full max-w-[240px] flex items-center justify-center">
-          <Image
-            src="/assets/bhikshu-logo-white.png"
-            alt="Bhikshu Tattoo Studio"
-            width={240}
-            height={70}
-            className="object-contain max-h-16 w-auto"
-            priority
-            unoptimized
+        {/* 1. Standalone Bhikshu Emblem (NO text), Centered & Animated Floating By-Forth */}
+        <div className="relative flex flex-col items-center justify-center pt-2 pb-1 select-none">
+          {/* Subtle Warm Gold Aura behind the floating emblem */}
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-[#9C7A3C]/25 blur-xl pointer-events-none animate-float-aura"
+            aria-hidden="true"
+          />
+
+          {/* Floating Emblem (smooth byforth continuous levitation) */}
+          <div className="relative animate-float-byforth flex items-center justify-center">
+            <Image
+              src="/assets/bhikshu-emblem-white.png"
+              alt="Bhikshu Emblem"
+              width={76}
+              height={90}
+              className="object-contain h-20 w-auto drop-shadow-[0_4px_16px_rgba(156,122,60,0.35)] select-none pointer-events-none"
+              priority
+              unoptimized
+            />
+          </div>
+
+          {/* Dynamic Ground Shadow responding to the levitation */}
+          <div
+            className="w-12 h-1.5 rounded-full bg-black/60 blur-[2px] mt-2 animate-float-shadow pointer-events-none"
+            aria-hidden="true"
           />
         </div>
 

@@ -36,3 +36,60 @@ div[data-vercel-toolbar],
 div[data-testid="vercel-toolbar"] {
   display: none !important;
 }
+
+/* Professional Floating By-Forth & Levitation Keyframes */
+@keyframes floatByForth {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) translateX(3.5px) rotate(1.2deg);
+  }
+  50% {
+    transform: translateY(-2px) translateX(0px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-9px) translateX(-3.5px) rotate(-1.2deg);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+}
+
+@keyframes floatAura {
+  0%, 100% {
+    opacity: 0.22;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.52;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes floatShadow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    opacity: 0.16;
+    transform: scaleX(0.72) scaleY(0.65);
+  }
+}
+
+.animate-float-byforth {
+  animation: floatByForth 5.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
+}
+
+.animate-float-aura {
+  animation: floatAura 5.4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-float-shadow {
+  animation: floatShadow 5.4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
