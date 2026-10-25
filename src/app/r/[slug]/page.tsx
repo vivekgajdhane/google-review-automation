@@ -25,19 +25,7 @@ import {
 
 import { BhikshuReviewInterface } from "@/components/bhikshu/BhikshuReviewInterface";
 
-export default function PublicBusinessPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const resolvedParams = React.use(params);
-  const slug = resolvedParams?.slug || "bhikshu-tattoo";
-
-  // Dedicated custom interface for Bhikshu Tattoo Studio
-  if (slug === "bhikshu-tattoo") {
-    return <BhikshuReviewInterface business={getRegisteredBusiness("bhikshu-tattoo")} />;
-  }
-
+function GenericBusinessReviewPage({ slug }: { slug: string }) {
   // Instant synchronous profile loading - 0ms delay, no layout shift or lag
   const [business, setBusiness] = React.useState<PublicBusinessData>(() =>
     getRegisteredBusiness(slug)
@@ -635,4 +623,20 @@ END:VCARD`;
       </main>
     </div>
   );
+}
+
+export default function PublicBusinessPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = React.use(params);
+  const slug = resolvedParams?.slug || "bhikshu-tattoo";
+
+  // Dedicated custom interface for Bhikshu Tattoo Studio
+  if (slug === "bhikshu-tattoo") {
+    return <BhikshuReviewInterface business={getRegisteredBusiness("bhikshu-tattoo")} />;
+  }
+
+  return <GenericBusinessReviewPage slug={slug} />;
 }
