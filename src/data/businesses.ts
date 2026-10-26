@@ -100,6 +100,7 @@ export const BUSINESSES_REGISTRY: Record<string, PublicBusinessData> = {
     "googleReviewUrl": "https://www.google.com/maps/place/Bhikshu+Tattoo+Studio+%7C+Best+tattoo+studio+in+pune/@18.5654478,73.9105924,112m/data=!3m1!1e3!4m8!3m7!1s0x3bc2c15ecc1b8797:0x315b9b1fa5949c21!8m2!3d18.5654477!4d73.9109004!9m1!1b1!16s%2Fg%2F11qnttbv42?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
     "googleMapsUrl": "https://maps.app.goo.gl/ZWi4gTXhM4aZ4pS79",
     "websiteUrl": "https://www.bhikshutattoostudio.com/",
+    "facebookUrl": "https://www.facebook.com/bhikshutattoo",
     "instagram1": "https://www.instagram.com/bhikshu_tattoo/",
     "instagram1Label": "@bhikshu_tattoo",
     "instagram2": "https://www.instagram.com/bhikshutattoo/",

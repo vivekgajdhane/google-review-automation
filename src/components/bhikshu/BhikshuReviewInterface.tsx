@@ -381,11 +381,11 @@ END:VCARD`;
 
           {/* Facebook */}
           <a
-            href="https://www.facebook.com/Sandy.Bhikshu"
+            href={business.facebookUrl || "https://www.facebook.com/bhikshutattoo"}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Facebook Sandy.Bhikshu"
-            title="Follow on Facebook"
+            aria-label="Facebook @bhikshutattoo"
+            title="Follow Bhikshu Tattoo on Facebook"
             className="w-11 h-11 rounded-full bg-[#1F2723]/90 border border-[#3A463E] text-[#B5BEB7] hover:text-[#FFFFFF] hover:border-[#9C7A3C] flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group shadow-sm"
           >
             <svg

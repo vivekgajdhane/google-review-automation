@@ -39,7 +39,7 @@ INSERT INTO public.businesses (
         "instagram1Label": "@bhikshu_tattoo",
         "instagram2": "https://www.instagram.com/bhikshutattoo/",
         "instagram2Label": "@bhikshutattoo",
-        "facebookUrl": "https://www.facebook.com/Sandy.Bhikshu",
+        "facebookUrl": "https://www.facebook.com/bhikshutattoo",
         "email": "bhikshutattoo.gmb@gmail.com",
         "logoPath": "/assets/bhikshu-logo.png"
     }'::jsonb
