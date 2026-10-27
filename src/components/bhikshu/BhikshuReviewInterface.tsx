@@ -67,7 +67,59 @@ export function BhikshuReviewInterface({
   const [copied, setCopied] = React.useState<boolean>(false);
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
 
+  // Review Box Scrollbar Tracking
+  const [isScrolling, setIsScrolling] = React.useState<boolean>(false);
+  const [scrollThumb, setScrollThumb] = React.useState<{ top: number; height: number }>({
+    top: 0,
+    height: 35
+  });
+  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  // Recalculate scrollbar thumb size and position
+  const updateScrollIndicator = React.useCallback(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    const clientH = el.clientHeight;
+    const scrollH = el.scrollHeight;
+    const scrollT = el.scrollTop;
+
+    if (scrollH > clientH) {
+      const heightPct = Math.max(20, Math.min(75, (clientH / scrollH) * 100));
+      const maxScroll = scrollH - clientH;
+      const topPct = maxScroll > 0 ? (scrollT / maxScroll) * (100 - heightPct) : 0;
+      setScrollThumb({ top: topPct, height: heightPct });
+    } else {
+      setScrollThumb({ top: 0, height: 100 });
+    }
+  }, []);
+
+  const handleTextareaScroll = () => {
+    updateScrollIndicator();
+    setIsScrolling(true);
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsScrolling(false);
+    }, 1000);
+  };
+
+  React.useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.scrollTop = 0;
+    }
+    const raf = requestAnimationFrame(updateScrollIndicator);
+    return () => cancelAnimationFrame(raf);
+  }, [generatedDraft, updateScrollIndicator]);
+
+  React.useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Generate review on mount or selection change
   React.useEffect(() => {
@@ -366,24 +418,40 @@ END:VCARD`;
             </span>
           </div>
 
-          {/* Editable Review Draft Body Text */}
-          <textarea
-            ref={textareaRef}
-            value={generatedDraft}
-            onChange={(e) => {
-              setGeneratedDraft(e.target.value);
-              if (textareaRef.current) {
-                textareaRef.current.style.height = "auto";
-                textareaRef.current.style.height = `${Math.max(
-                  110,
-                  textareaRef.current.scrollHeight
-                )}px`;
-              }
-            }}
-            className="w-full text-sm sm:text-[15px] font-dm text-[#FFFFFF] bg-transparent resize-none overflow-hidden border-none p-0 focus:outline-none focus:ring-0 leading-relaxed tracking-normal font-normal text-left placeholder:text-[#8E9B92]"
-            placeholder="Your review will appear here..."
-            rows={4}
-          />
+          {/* Editable Review Draft Body Text with Custom Slide Line & Auto-Fading Bar */}
+          <div className="relative w-full">
+            <textarea
+              ref={textareaRef}
+              value={generatedDraft}
+              onChange={(e) => {
+                setGeneratedDraft(e.target.value);
+                updateScrollIndicator();
+              }}
+              onScroll={handleTextareaScroll}
+              onTouchMove={handleTextareaScroll}
+              className="w-full h-[120px] sm:h-[130px] text-sm sm:text-[15px] font-dm text-[#FFFFFF] bg-transparent resize-none overflow-y-auto border-none p-0 pr-4 focus:outline-none focus:ring-0 leading-relaxed tracking-normal font-normal text-left placeholder:text-[#8E9B92] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              placeholder="Your review will appear here..."
+              rows={4}
+            />
+
+            {/* Slide Line (Always Visible) & Scroll Bar Thumb (Visible when Customer Scrolls) */}
+            <div
+              className="absolute right-0 top-1 bottom-1 w-[3px] bg-white/15 rounded-full pointer-events-none select-none"
+              aria-hidden="true"
+            >
+              {/* Dynamic Sliding Bar Thumb */}
+              <div
+                className={`w-full rounded-full bg-[#9C7A3C] shadow-[0_0_8px_rgba(156,122,60,0.6)] transition-opacity duration-300 ${
+                  isScrolling ? "opacity-100" : "opacity-0"
+                }`}
+                style={{
+                  top: `${scrollThumb.top}%`,
+                  height: `${scrollThumb.height}%`,
+                  position: "absolute"
+                }}
+              />
+            </div>
+          </div>
 
           {/* Action Row: Left (Solid Gold Copy Button with Google G Icon) + Right (Square Refresh Button) */}
           <div className="pt-2 flex items-center gap-2.5">
