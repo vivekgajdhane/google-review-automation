@@ -9,8 +9,7 @@ import {
   Check,
   RefreshCw,
   Instagram,
-  UserPlus,
-  MessageCircle,
+  Phone,
   Globe
 } from "lucide-react";
 
@@ -56,6 +55,19 @@ function GoogleGIcon({ className = "w-4 h-4 shrink-0" }: { className?: string })
   );
 }
 
+function WhatsAppIcon({ className = "w-4 h-4 shrink-0" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12.031 2C6.495 2 2 6.494 2 12.029c0 1.97.57 3.824 1.564 5.405L2 22l4.73-1.524a10.007 10.007 0 0 0 5.301 1.553h.004c5.534 0 10.03-4.495 10.03-10.03C22.065 6.494 17.568 2 12.031 2zm0 18.337h-.003a8.318 8.318 0 0 1-4.24-1.16l-.304-.18-3.153 1.015 1.042-3.07-.198-.315a8.27 8.27 0 0 1-1.272-4.598c0-4.59 3.737-8.326 8.33-8.326a8.283 8.283 0 0 1 5.888 2.441 8.28 8.28 0 0 1 2.438 5.889c0 4.59-3.738 8.325-8.328 8.325zm4.568-6.236c-.25-.125-1.482-.731-1.712-.814-.23-.083-.397-.125-.564.125-.167.25-.646.814-.792.98-.146.166-.292.187-.542.062-.25-.125-1.056-.39-2.012-1.242-.744-.664-1.246-1.484-1.392-1.734-.146-.25-.016-.385.11-.51.112-.112.25-.291.375-.437.125-.146.167-.25.25-.417.083-.166.042-.312-.021-.437-.063-.125-.563-1.355-.771-1.855-.203-.487-.41-.421-.564-.429l-.48-.008c-.167 0-.438.063-.667.312-.23.25-.876.856-.876 2.086 0 1.23.896 2.418 1.021 2.585.125.166 1.764 2.693 4.274 3.777.597.258 1.064.412 1.428.528.6.19 1.145.163 1.576.099.48-.072 1.482-.605 1.69-1.189.209-.584.209-1.084.146-1.189-.062-.104-.229-.166-.479-.291z" />
+    </svg>
+  );
+}
+
 export function BhikshuReviewInterface({
   business = BHIKSHU_TATTOO_BUSINESS
 }: BhikshuReviewInterfaceProps) {
@@ -66,6 +78,7 @@ export function BhikshuReviewInterface({
   const [generatedDraft, setGeneratedDraft] = React.useState<string>("");
   const [copied, setCopied] = React.useState<boolean>(false);
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
+  const [refreshRotation, setRefreshRotation] = React.useState<number>(0);
 
   // Review Box Scrollbar Tracking
   const [isScrolling, setIsScrolling] = React.useState<boolean>(false);
@@ -144,8 +157,9 @@ export function BhikshuReviewInterface({
     setGeneratedDraft(draft);
   }, [business.name, selectedPill, selectedArtist, language, experience]);
 
-  // Handle shuffle button
+  // Handle shuffle button with smooth circular spin
   const handleShuffle = () => {
+    setRefreshRotation((prev) => prev + 360);
     const selectedItem = STYLE_PILLS.find((p) => p.id === selectedPill);
     const styleParam =
       selectedPill === "ALL"
@@ -201,32 +215,6 @@ export function BhikshuReviewInterface({
       setCopied(false);
       window.location.href = targetUrl;
     }, 400);
-  };
-
-  // Download vCard Contact
-  const handleDownloadVcard = () => {
-    const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:Bhikshu Tattoo Studio
-ORG:Bhikshu Tattoo Studio
-TITLE:Founder & Lead Artist: Sandip Waghmare
-TEL;TYPE=WORK,VOICE:+919689976453
-EMAIL:bhikshutattoo.gmb@gmail.com
-URL:https://www.bhikshutattoostudio.com/
-ADR;TYPE=WORK:;;Lane No. 12, Row House 3, Konark Nagar, CCD Chowk, opp. Udaan Bio-Diversity Park, Viman Nagar;Pune;Maharashtra;411014;India
-NOTE:Connecting your stories to your tattoo. 100% Sterile Studio in Viman Nagar, Pune.
-END:VCARD`;
-
-    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `bhikshu-tattoo-studio-contact.vcf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showToast("📇 Bhikshu Studio contact card saved to phone!");
   };
 
   return (
@@ -473,7 +461,7 @@ END:VCARD`;
               )}
             </button>
 
-            {/* Refresh / Shuffle Button */}
+            {/* Refresh / Shuffle Button with Circular Spin Animation */}
             <button
               type="button"
               onClick={handleShuffle}
@@ -481,7 +469,10 @@ END:VCARD`;
               title="Shuffle another review draft"
               className="w-12 h-12 bg-[#252E28] hover:bg-[#2F3A33] active:scale-95 border border-[#3A463E] rounded-xl flex items-center justify-center text-white transition-all cursor-pointer shrink-0"
             >
-              <RefreshCw className="w-4 h-4 text-[#B5BEB7] hover:text-white transition-colors" />
+              <RefreshCw
+                className="w-4 h-4 text-[#B5BEB7] hover:text-white transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                style={{ transform: `rotate(${refreshRotation}deg)` }}
+              />
             </button>
           </div>
         </div>
@@ -540,18 +531,17 @@ END:VCARD`;
             </svg>
           </a>
 
-          {/* Save Contact vCard */}
-          <button
-            onClick={handleDownloadVcard}
-            type="button"
-            aria-label="Save Studio Contact"
-            title="Save Contact to Phone"
+          {/* Direct Phone Dialer Link */}
+          <a
+            href="tel:+919689976453"
+            aria-label="Call Bhikshu Tattoo Studio"
+            title="Call Studio Directly"
             className="w-11 h-11 rounded-full bg-[#1F2723]/90 border border-[#3A463E] text-[#B5BEB7] hover:text-[#FFFFFF] hover:border-[#9C7A3C] flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group shadow-sm cursor-pointer"
           >
-            <UserPlus className="w-4 h-4 group-hover:scale-110 transition-transform" />
-          </button>
+            <Phone className="w-4 h-4 group-hover:scale-110 transition-transform" />
+          </a>
 
-          {/* WhatsApp */}
+          {/* Official WhatsApp Logo */}
           <a
             href="https://wa.me/919689976453?text=Hi%20Bhikshu%20Tattoo%20Studio%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
             target="_blank"
@@ -560,7 +550,7 @@ END:VCARD`;
             title="WhatsApp Enquiry"
             className="w-11 h-11 rounded-full bg-[#1F2723]/90 border border-[#3A463E] text-[#B5BEB7] hover:text-[#FFFFFF] hover:border-[#9C7A3C] flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 active:scale-95 group shadow-sm"
           >
-            <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
+            <WhatsAppIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
           </a>
 
           {/* Official Website */}
