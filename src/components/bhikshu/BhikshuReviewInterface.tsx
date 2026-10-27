@@ -272,30 +272,41 @@ END:VCARD`;
             SHARE YOUR EXPERIENCE
           </p>
 
-          {/* Horizontal Bar: Good Exp vs Not Good Exp in Font Sora */}
-          <div className="w-full max-w-[280px] sm:max-w-[300px] p-1 bg-[#1F2723]/90 border border-[#3A463E] rounded-full flex items-center shadow-inner font-sora mt-1">
-            <button
-              type="button"
-              onClick={() => setExperience("good")}
-              className={`flex-1 py-1.5 px-3 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer text-center ${
-                experience === "good"
-                  ? "bg-[#9C7A3C] text-white shadow-md scale-[1.02]"
-                  : "text-[#B5BEB7] hover:text-[#FFFFFF]"
+          {/* Smooth Sliding Segmented Switch: Good Exp vs Not Good Exp in Font Sora */}
+          <div className="relative w-full max-w-[300px] sm:max-w-[320px] h-11 p-1 bg-[#1A211D]/95 border border-[#3A463E] rounded-full shadow-inner font-sora select-none mt-1">
+            {/* Smooth Sliding Background Indicator */}
+            <div
+              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-[#9C7A3C] shadow-[0_2px_10px_rgba(156,122,60,0.4)] transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform ${
+                experience === "good" ? "translate-x-0" : "translate-x-full"
               }`}
-            >
-              Good Exp
-            </button>
-            <button
-              type="button"
-              onClick={() => setExperience("not_good")}
-              className={`flex-1 py-1.5 px-3 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer text-center ${
-                experience === "not_good"
-                  ? "bg-[#9C7A3C] text-white shadow-md scale-[1.02]"
-                  : "text-[#B5BEB7] hover:text-[#FFFFFF]"
-              }`}
-            >
-              Not Good Exp
-            </button>
+              aria-hidden="true"
+            />
+
+            {/* Symmetrically Spaced Labels */}
+            <div className="relative z-10 grid grid-cols-2 w-full h-full">
+              <button
+                type="button"
+                onClick={() => setExperience("good")}
+                className={`w-full h-full flex items-center justify-center text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
+                  experience === "good"
+                    ? "text-[#FFFFFF]"
+                    : "text-[#B5BEB7] hover:text-[#FFFFFF]"
+                }`}
+              >
+                GOOD EXP
+              </button>
+              <button
+                type="button"
+                onClick={() => setExperience("not_good")}
+                className={`w-full h-full flex items-center justify-center text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
+                  experience === "not_good"
+                    ? "text-[#FFFFFF]"
+                    : "text-[#B5BEB7] hover:text-[#FFFFFF]"
+                }`}
+              >
+                NOT GOOD EXP
+              </button>
+            </div>
           </div>
         </div>
 
