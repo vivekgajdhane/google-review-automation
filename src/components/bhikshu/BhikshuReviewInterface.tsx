@@ -191,29 +191,29 @@ END:VCARD`;
         </div>
       )}
 
-      {/* Main Container */}
-      <main className="w-full max-w-[410px] mx-auto flex flex-col items-center space-y-4 py-5 relative z-10">
-        {/* Top-Right "POWERED BY @phoenixtech.co" Badge (Optimized for Mobile View) */}
-        <div className="w-full flex justify-end items-center px-1 -mt-1 mb-0.5 select-none">
-          <a
-            href="https://www.instagram.com/phoenixtech.co/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1F2723]/90 hover:bg-[#1F2723] border border-[#3A463E] hover:border-[#9C7A3C] backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all duration-200 group active:scale-95 font-sora"
-            title="Powered by @phoenixtech.co"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E0A93B] group-hover:scale-125 transition-transform duration-200" />
-            <span className="text-[9px] uppercase tracking-[0.14em] text-[#B5BEB7] font-semibold group-hover:text-[#FFFFFF] transition-colors">
-              POWERED BY
-            </span>
-            <span className="text-[10px] text-[#FFFFFF] font-bold tracking-normal group-hover:text-[#E0A93B] transition-colors">
-              @phoenixtech.co
-            </span>
-          </a>
-        </div>
+      {/* Top-Right "POWERED BY @phoenixtech.co" Badge */}
+      <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-6 z-30 select-none">
+        <a
+          href="https://www.instagram.com/phoenixtech.co/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1F2723]/90 hover:bg-[#1F2723] border border-[#3A463E] hover:border-[#9C7A3C] backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all duration-200 group active:scale-95 font-sora"
+          title="Powered by @phoenixtech.co"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#E0A93B] group-hover:scale-125 transition-transform duration-200" />
+          <span className="text-[9px] uppercase tracking-[0.14em] text-[#B5BEB7] font-semibold group-hover:text-[#FFFFFF] transition-colors">
+            POWERED BY
+          </span>
+          <span className="text-[10px] text-[#FFFFFF] font-bold tracking-normal group-hover:text-[#E0A93B] transition-colors">
+            @phoenixtech.co
+          </span>
+        </a>
+      </div>
 
+      {/* Main Container */}
+      <main className="w-full max-w-[410px] mx-auto flex flex-col items-center space-y-4 py-6 relative z-10">
         {/* 1. Standalone Bhikshu Emblem (NO text), Animated Floating By-Forth */}
-        <div className="relative flex flex-col items-center justify-center pt-1 pb-1 select-none">
+        <div className="relative flex flex-col items-center justify-center pt-2 pb-1 select-none">
           {/* Subtle Warm Gold Aura behind the floating emblem */}
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-[#9C7A3C]/25 blur-xl pointer-events-none animate-float-aura"
