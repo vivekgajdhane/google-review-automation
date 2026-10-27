@@ -468,7 +468,7 @@ END:VCARD`;
               ) : (
                 <>
                   <GoogleGIcon className="w-4 h-4 shrink-0 drop-shadow-sm" />
-                  <span>COPY &amp; PASTE ON GOOGLE</span>
+                  <span>POST TO GOOGLE</span>
                 </>
               )}
             </button>
