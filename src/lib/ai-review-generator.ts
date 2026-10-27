@@ -7,10 +7,11 @@ export interface ReviewGenerationParams {
   language: ReviewLanguage;
   vibe?: "enthusiastic" | "professional" | "concise";
   artist?: string;
+  sentiment?: "good" | "not_good";
 }
 
 export function generateReviewDraft(params: ReviewGenerationParams): string {
-  const { businessName, course, highlights, language, artist } = params;
+  const { businessName, course, highlights, language, artist, sentiment } = params;
   const isTattoo =
     businessName.toLowerCase().includes("tattoo") ||
     (course && /tattoo|piercing|mandala|realism|ink/i.test(course)) ||
@@ -263,6 +264,38 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
   // =========================================================================
   if (isTattoo) {
     if (language === "en") {
+      if (sentiment === "not_good") {
+        const notGoodOpenings = (artist && artist !== "ALL")
+          ? [
+              `Visited ${businessName} in Viman Nagar for a tattoo session with ${artist}.`,
+              `Had my ${course || "tattoo"} sitting with ${artist} at ${businessName}.`,
+              `Got inked by ${artist} at ${businessName} recently.`
+            ]
+          : [
+              `Visited ${businessName} in Viman Nagar for a ${course || "tattoo"} session.`,
+              `Had my inking session at ${businessName} recently.`,
+              `Booked a ${course || "tattoo"} appointment at ${businessName}.`
+            ];
+
+        const notGoodObservations = [
+          "While the studio is hygienic and the artwork turned out okay, the waiting time was quite long even with prior appointment.",
+          "The hygiene protocols and sterile setup are maintained well, but the consultation felt rushed and communication regarding pricing could have been much clearer upfront.",
+          "The studio ambience is clean, but appointment scheduling felt disorganized and the session took much longer than initially quoted.",
+          "The basic artwork turned out decent, but there was minimal guidance on aftercare and the artist seemed in a hurry during the sitting."
+        ];
+
+        const notGoodConclusions = [
+          "Decent tattoo work overall, but room for improvement in time management and customer coordination.",
+          "An average experience. Hope they focus more on client communication and smoother scheduling in the future.",
+          "Fair artwork, but expected better customer service and attentiveness for the price charged."
+        ];
+
+        const op = pickRandom(notGoodOpenings);
+        const obs = pickRandom(notGoodObservations);
+        const con = pickRandom(notGoodConclusions);
+        return `${op} ${obs} ${con}`.replace(/\s+/g, " ").trim();
+      }
+
       const openings = (artist && artist !== "ALL")
         ? [
             `Got my ${course || "custom tattoo"} done by ${artist} at ${businessName} and the experience was truly exceptional!`,
@@ -329,6 +362,35 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
     }
 
     if (language === "hinglish") {
+      if (sentiment === "not_good") {
+        const notGoodOpenings = (artist && artist !== "ALL")
+          ? [
+              `${businessName} me ${artist} ke saath tattoo session ka experience average raha.`,
+              `${businessName} Viman Nagar me ${artist} se tattoo karwaya tha.`
+            ]
+          : [
+              `${businessName} Viman Nagar me tattoo session ka overall experience average raha.`,
+              `${businessName} me ${course || "tattoo"} session attend kiya.`
+            ];
+
+        const notGoodObservations = [
+          "Studio me cleanliness aur hygiene theek thi, lekin appointment ke baad bhi kaafi der wait karna pada aur consultation rushed laga.",
+          "Tattoo ka output theek aaya hai par pricing upfront transparent nahi thi aur process ke dauran communication thoda better ho sakta tha.",
+          "Clean studio setup hai lekin appointment scheduling me delay hua aur aftercare guidance kaafi basic aur hurried laga."
+        ];
+
+        const notGoodConclusions = [
+          "Artwork theek hai par time management aur customer handling me improvement ki zaroorat hai.",
+          "Average service, future me better coordination aur customer focus expect karte hain.",
+          "Tattoo decent bana hai lekin overall experience aur smoother ho sakta tha."
+        ];
+
+        const op = pickRandom(notGoodOpenings);
+        const obs = pickRandom(notGoodObservations);
+        const con = pickRandom(notGoodConclusions);
+        return `${op} ${obs} ${con}`.replace(/\s+/g, " ").trim();
+      }
+
       const courseText = course ? `${course} ke liye ` : "";
       const openings = (artist && artist !== "ALL")
         ? [
@@ -394,6 +456,35 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
     }
 
     if (language === "hi") {
+      if (sentiment === "not_good") {
+        const notGoodOpenings = (artist && artist !== "ALL")
+          ? [
+              `${businessName} विमान नगर में आर्टिस्ट ${artist} से टैटू बनवाया।`,
+              `${businessName} में ${artist} के साथ टैटू सेशन का अनुभव औसत रहा।`
+            ]
+          : [
+              `${businessName} विमान नगर में टैटू बनवाने का मेरा अनुभव सामान्य रहा।`,
+              `${businessName} में ${course || "टैटू"} सेशन के लिए गया था।`
+            ];
+
+        const notGoodObservations = [
+          "स्टूडियो की स्वच्छता और हाइजीन ठीक है, परंतु अपॉइंटमेंट होने के बावजूद काफी लंबा इंतजार करना पड़ा और कंसल्टेशन थोड़ा जल्दबाजी में लगा।",
+          "टैटू का काम ठीक हुआ है, लेकिन प्रक्रिया के दौरान मार्गदर्शन और आफ्टरकेयर की जानकारी उतनी स्पष्ट नहीं दी गई जितनी उम्मीद थी।",
+          "साफ-सफाई का ध्यान रखा गया है, लेकिन समय प्रबंधन और शुरुआत में शुल्क को लेकर स्पष्टता में कमी महसूस हुई।"
+        ];
+
+        const notGoodConclusions = [
+          "टैटू ठीक बना है, लेकिन समय प्रबंधन और ग्राहक सेवा में सुधार की आवश्यकता है।",
+          "एक सामान्य अनुभव रहा, भविष्य में बेहतर समन्वय और संवाद की उम्मीद है।",
+          "कलाकारी ठीक है परंतु कुल मिलाकर अनुभव और बेहतर हो सकता था।"
+        ];
+
+        const op = pickRandom(notGoodOpenings);
+        const obs = pickRandom(notGoodObservations);
+        const con = pickRandom(notGoodConclusions);
+        return `${op} ${obs} ${con}`.replace(/\s+/g, " ").trim();
+      }
+
       const courseText = course ? `${course} के लिए ` : "";
       const openings = (artist && artist !== "ALL")
         ? [

@@ -61,6 +61,7 @@ export function BhikshuReviewInterface({
 }: BhikshuReviewInterfaceProps) {
   const [selectedPill, setSelectedPill] = React.useState<string>("ALL");
   const [selectedArtist, setSelectedArtist] = React.useState<string>("ALL");
+  const [experience, setExperience] = React.useState<"good" | "not_good">("good");
   const [language, setLanguage] = React.useState<ReviewLanguage>("en");
   const [generatedDraft, setGeneratedDraft] = React.useState<string>("");
   const [copied, setCopied] = React.useState<boolean>(false);
@@ -85,10 +86,11 @@ export function BhikshuReviewInterface({
         "Incredibly Fine Lines",
         "Peaceful Studio Ambience"
       ],
-      language: language
+      language: language,
+      sentiment: experience
     });
     setGeneratedDraft(draft);
-  }, [business.name, selectedPill, selectedArtist, language]);
+  }, [business.name, selectedPill, selectedArtist, language, experience]);
 
   // Handle shuffle button
   const handleShuffle = () => {
@@ -107,7 +109,8 @@ export function BhikshuReviewInterface({
         "Incredibly Fine Lines",
         "Peaceful Studio Ambience"
       ],
-      language: language
+      language: language,
+      sentiment: experience
     });
     setGeneratedDraft(draft);
     showToast("✨ Generated a new review draft!");
@@ -240,17 +243,60 @@ END:VCARD`;
           />
         </div>
 
-        {/* 2. 5 Stars + Subtitle (Clean & Minimal) */}
-        <div className="flex flex-col items-center space-y-1.5 pt-0.5">
+        {/* 2. Rating Stars + Subtitle + Experience Selector */}
+        <div className="flex flex-col items-center space-y-2 pt-0.5 w-full">
           <div className="flex items-center gap-1.5 text-[#E0A93B]">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 fill-[#E0A93B] text-[#E0A93B]" />
-            ))}
+            {[1, 2, 3, 4, 5].map((starVal) => {
+              const isFilled = experience === "good" ? starVal <= 5 : starVal <= 3;
+              return (
+                <button
+                  key={starVal}
+                  type="button"
+                  onClick={() => setExperience(starVal >= 4 ? "good" : "not_good")}
+                  className="transition-transform hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
+                  aria-label={`${starVal} Star Rating`}
+                >
+                  <Star
+                    className={`w-5 h-5 transition-colors ${
+                      isFilled
+                        ? "fill-[#E0A93B] text-[#E0A93B]"
+                        : "fill-transparent text-[#4E5C53]"
+                    }`}
+                  />
+                </button>
+              );
+            })}
           </div>
 
-          <p className="font-sora text-xs uppercase tracking-[0.25em] text-[#FFFFFF] font-bold text-center pt-1">
+          <p className="font-sora text-xs uppercase tracking-[0.25em] text-[#FFFFFF] font-bold text-center pt-0.5">
             SHARE YOUR EXPERIENCE
           </p>
+
+          {/* Horizontal Bar: Good Exp vs Not Good Exp in Font Sora */}
+          <div className="w-full max-w-[280px] sm:max-w-[300px] p-1 bg-[#1F2723]/90 border border-[#3A463E] rounded-full flex items-center shadow-inner font-sora mt-1">
+            <button
+              type="button"
+              onClick={() => setExperience("good")}
+              className={`flex-1 py-1.5 px-3 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer text-center ${
+                experience === "good"
+                  ? "bg-[#9C7A3C] text-white shadow-md scale-[1.02]"
+                  : "text-[#B5BEB7] hover:text-[#FFFFFF]"
+              }`}
+            >
+              Good Exp
+            </button>
+            <button
+              type="button"
+              onClick={() => setExperience("not_good")}
+              className={`flex-1 py-1.5 px-3 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer text-center ${
+                experience === "not_good"
+                  ? "bg-[#9C7A3C] text-white shadow-md scale-[1.02]"
+                  : "text-[#B5BEB7] hover:text-[#FFFFFF]"
+              }`}
+            >
+              Not Good Exp
+            </button>
+          </div>
         </div>
 
         {/* 3. Category Style Pills */}
