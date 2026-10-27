@@ -55,9 +55,14 @@ export default function DynamicQrStandPage({
   // Destination modes: "software" (/r/slug - our app) | "google" (direct Google Maps review composer box)
   const [destinationMode, setDestinationMode] = React.useState<"software" | "google">("software");
   
-  const [publicHost, setPublicHost] = React.useState<string>(
-    "https://bhikshutattoostudio.vercel.app"
-  );
+  const isBhikshu = slug === "bhikshu-tattoo";
+  const isNaad = slug === "naadjamroom" || slug === "naad-jamroom" || slug === "naad";
+
+  const [publicHost, setPublicHost] = React.useState<string>(() => {
+    if (slug.includes("naad")) return "https://naadjamroom.vercel.app";
+    if (slug === "phoenix-tech") return "https://phoenixtechacademy.vercel.app";
+    return "https://bhikshutattoostudio.vercel.app";
+  });
 
   // Automatically adapt to current domain if visited over HTTPS
   React.useEffect(() => {
@@ -77,9 +82,10 @@ export default function DynamicQrStandPage({
   const [copiedLink, setCopiedLink] = React.useState(false);
   const [activeUrl, setActiveUrl] = React.useState<string>("");
 
-  const isBhikshu = slug === "bhikshu-tattoo";
   const logoToDisplay = isBhikshu
     ? (standTheme === "white" ? "/assets/bhikshu-emblem.png" : "/assets/bhikshu-emblem-white.png")
+    : isNaad
+    ? "/assets/naad-logo.png"
     : business.logoPath;
 
   // Determine active scan URL & generate QR
@@ -210,11 +216,16 @@ export default function DynamicQrStandPage({
             }`}
             style={
               standTheme === "stone"
-                ? {
-                    backgroundImage: `radial-gradient(circle at 50% 12%, rgba(60, 71, 63, 0.42) 0%, rgba(28, 34, 30, 0.95) 100%), url('/assets/bhikshu-stone-bg.jpg')`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }
+                ? isNaad
+                  ? {
+                      backgroundColor: "#143736",
+                      backgroundImage: `radial-gradient(circle at 50% 12%, rgba(232, 156, 59, 0.22) 0%, rgba(10, 26, 25, 0.98) 100%)`,
+                    }
+                  : {
+                      backgroundImage: `radial-gradient(circle at 50% 12%, rgba(60, 71, 63, 0.42) 0%, rgba(28, 34, 30, 0.95) 100%), url('/assets/bhikshu-stone-bg.jpg')`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }
                 : undefined
             }
           >

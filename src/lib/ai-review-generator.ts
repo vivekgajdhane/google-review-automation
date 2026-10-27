@@ -18,6 +18,246 @@ export function generateReviewDraft(params: ReviewGenerationParams): string {
 
   const pickRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
 
+  const isMusicStudio =
+    businessName.toLowerCase().includes("naad") ||
+    businessName.toLowerCase().includes("jam") ||
+    (course && /jam|rehearsal|recording|vocal|mixing|mastering|track|studio|podcast/i.test(course)) ||
+    highlights.some((h) => /acoustic|drum|amp|soundproof|monitor|lighting|musician|rehearsal/i.test(h));
+
+  // =========================================================================
+  // 0. MUSIC JAM ROOM & RECORDING STUDIO NICHE (Naad Jamroom Kharadi Pune)
+  // =========================================================================
+  if (isMusicStudio) {
+    if (language === "en") {
+      const openings = [
+        `Had an incredible session for ${course || "band rehearsal"} at ${businessName} in Kharadi!`,
+        `Hands down one of the best and most comfortable jam rooms and recording studios in Pune!`,
+        `Booked ${businessName} for our music session and the entire experience was outstanding.`,
+        `Such a creative, positive vibe at ${businessName}! The space is truly built by musicians for musicians.`,
+        `Our band rehearsed at ${businessName} and we were thoroughly impressed by the acoustics and backline.`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "Superb Acoustics & Soundproofing": [
+          "The acoustic treatment and sound isolation are top-tier with zero muddy resonance or harsh echoes.",
+          "Incredible sound isolation—every instrument and vocal harmony came through crisp and well-defined."
+        ],
+        "Top-Tier Drum Kit & Tube Amps": [
+          "The drum kit is tuned to perfection and the guitar/bass amps deliver rich, punchy tone.",
+          "High quality backline gear, tight drum heads, and dependable amplifiers that handle heavy riffs with ease."
+        ],
+        "Helpful & Musician-Friendly Host": [
+          "The host is super supportive, friendly, and helped us dial in our monitors and levels effortlessly.",
+          "Warm and welcoming management that genuinely respects musicians and ensures a smooth session."
+        ],
+        "Cozy Mood Lighting & Vibe": [
+          "The ambient studio lighting and aesthetic setup create the perfect creative mood for long sessions.",
+          "Great vibe and cozy lighting that kept the whole band energized and in the groove."
+        ],
+        "Crystal Clear Vocal Monitors": [
+          "Vocal monitors and PA mics are crystal clear with zero feedback or audio clipping.",
+          "Powerful, clean PA setup so vocalists never have to strain to hear themselves over loud drums."
+        ],
+        "Affordable Hourly Jamming Rates": [
+          "Very pocket-friendly hourly jamming rates offering unbeatable value in Kharadi.",
+          "Affordable pricing with zero compromise on professional sound quality and gear."
+        ],
+        "Clean & Fully Air-Conditioned": [
+          "The studio is clean, well-maintained, and the AC cooling keeps high-energy jams super comfortable.",
+          "Spacious, chilled, and air-conditioned room with ample room for full bands."
+        ]
+      };
+
+      const conclusions = [
+        "Definitely making this our regular rehearsal pad! 10/10 recommendation.",
+        "Must-visit studio for all Pune bands, solo artists, and vocalists!",
+        `Can't wait to book our next jamming slot at ${businessName}. Highly recommended!`,
+        "Five stars all the way for quality sound, great gear, and pure musical vibes!"
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+
+    if (language === "hinglish") {
+      const openings = [
+        `${businessName} Kharadi me ${course || "jamming"} session kiya aur sound setup sach me ekdum next level hai!`,
+        `Pune me rehearsal aur recording ke liye ${businessName} sabse best aur chill studio hai.`,
+        `Humari band ne ${businessName} me practice kiya, sound balance aur energy zabardast mili!`,
+        `${businessName} me session attend karne ka experience superb raha, gear aur ambiance dono top class.`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "Superb Acoustics & Soundproofing": [
+          "Acoustic treatment aur soundproofing itni solid hai ki koi harsh echo nahi aata.",
+          "Room acoustics ekdum clean hai, har instrument ka sound clear sunai deta hai."
+        ],
+        "Top-Tier Drum Kit & Tube Amps": [
+          "Drum kit well-maintained aur tuned hai, aur amps ka punch aur tone behad solid hai.",
+          "Guitars aur bass ke liye heavy-duty amps available hain jo live feel dete hain."
+        ],
+        "Helpful & Musician-Friendly Host": [
+          "Host bhaiya bohot cooperative aur friendly hain, sound check me poori madad ki.",
+          "Super polite aur helpful staff jo musicians ki zaroorat ko achhi tarah samajhte hain."
+        ],
+        "Cozy Mood Lighting & Vibe": [
+          "Studio ki aesthetic lighting aur chill vibe se band ka mood automatically ban jata hai.",
+          "Ambiance aur lighting ekdum cozy hai, jam karte waqt pata hi nahi chalta time kaise nikla."
+        ],
+        "Crystal Clear Vocal Monitors": [
+          "Vocal mics aur monitors bohot clear hain, loud playing me bhi aawaz dabti nahi.",
+          "Zero feedback aur crystal clear sound delivery."
+        ],
+        "Affordable Hourly Jamming Rates": [
+          "Rates bohot genuine aur pocket-friendly hain, Kharadi me itna achha setup rare hai.",
+          "Affordable pricing me itne high quality equipments milna kamaal hai."
+        ],
+        "Clean & Fully Air-Conditioned": [
+          "Room clean aur fully air-conditioned hai, long sessions ke liye perfect comfort.",
+          "Proper AC cooling aur clean room jo lambi practice ke liye zaroori hai."
+        ]
+      };
+
+      const conclusions = [
+        "Pune ke sabhi musicians aur bands ko definitely recommend karunga!",
+        "Next jam ke liye humara spot fix hai! 5 out of 5 stars.",
+        "Totally worth it, full musical vibe!",
+        "Kharadi aur Viman Nagar side best jam room, highly recommended!"
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+
+    if (language === "mr") {
+      const openings = [
+        `नाद जॅमरूम आणि स्टुडिओमध्ये (Kharadi) आमच्या बँडची प्रॅक्टिस केली, अनुभव अतिशय उत्कृष्ट आणि सुखद होता!`,
+        `पुण्यातील सर्वोत्तम आणि दर्जेदार जॅमरूम म्हणजे नाद स्टुडिओ! संगीतकारांसाठी परिपूर्ण जागा.`,
+        `नाद जॅमरूममध्ये ${course || "संगीताचा सराव"} केला, तिथलं वातावरण आणि ध्वनी संयोजन मनाला खूप भावलं.`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "Superb Acoustics & Soundproofing": [
+          "स्टुडिओचे ॲकॉस्टिक्स आणि साउंडप्रूफिंग उत्तम दर्जाचे असून आवाज अतिशय स्पष्ट येतो.",
+          "ध्वनिप्रदूषण विरहित आणि सुसज्ज अशी साऊंडप्रूफ रचना आहे."
+        ],
+        "Top-Tier Drum Kit & Tube Amps": [
+          "ड्रम किट आणि गिटार ॲम्प्लिफायरची गुणवत्ता अतिशय उत्तम आहे.",
+          "सर्व वाद्ये आणि इक्विपमेंट्स योग्य प्रकारे मेंटेन केलेली आहेत."
+        ],
+        "Helpful & Musician-Friendly Host": [
+          "स्टुडिओचे संचालक खूप नम्र, मदतनीस आणि सहकार्यशील आहेत.",
+          "कलाकारांना समजून घेणारे आणि लगेच सहकार्य करणारे व्यवस्थापन."
+        ],
+        "Cozy Mood Lighting & Vibe": [
+          "स्टुडिओमधील प्रसन्न वातावरण आणि सुंदर लाइटिंग संगीताच्या सरावाला वेगळीच ऊर्जा देतात.",
+          "अतिशय शांत, सुरेल आणि सकारात्मक माहोल आहे."
+        ],
+        "Crystal Clear Vocal Monitors": [
+          "मायक्रोफोन आणि व्होकल मॉनिटर्सचा आवाज अतिशय सुस्पष्ट आहे.",
+          "गाताना कसलाही त्रास न होता आवाजाची उत्तम स्पष्टता मिळते."
+        ],
+        "Affordable Hourly Jamming Rates": [
+          "पुण्यातील इतर ठिकाणांच्या तुलनेत दर अतिशय वाजवी आणि परवडणारे आहेत.",
+          "खराडी परिसरातील उत्तम आणि माफक दरात उपलब्ध जॅमरूम."
+        ],
+        "Clean & Fully Air-Conditioned": [
+          "वातानुकूलित (AC) आणि स्वच्छ जागा असल्याने तासनतास सराव करणे सोपे जाते.",
+          "स्वच्छता आणि उत्तम वातानुकूलन."
+        ]
+      };
+
+      const conclusions = [
+        "पुण्यातील सर्व गायक, वादक आणि बँड्सनी नाद जॅमरूमला नक्की भेट द्यावी! ५/५ स्टार्स.",
+        "आमच्या पुढील सर्व प्रॅक्टिससाठी नाद स्टुडिओच पहिली पसंती असेल. मनापासून धन्यवाद!",
+        "उत्कृष्ट दर्जा आणि सुंदर सांगीतिक अनुभव! मनःपूर्वक शिफारस."
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+
+    if (language === "hi") {
+      const openings = [
+        `नाद जैमरूम एंड स्टूडियो (खराडी, पुणे) में हमारी रिहर्सल का अनुभव बहुत ही शानदार और प्रेरणादायक रहा!`,
+        `पुणे में संगीतकारों और बैंड्स के लिए नाद जैमरूम एक बेहतरीन, आधुनिक और सुकून देने वाला स्टूडियो है।`,
+        `नाद जैमरूम में ${course || "म्यूजिक प्रैक्टिस"} की, साउंड सेटअप और सुविधाएँ बहुत ही उच्च स्तर की हैं।`
+      ];
+
+      const highlightMap: Record<string, string[]> = {
+        "Superb Acoustics & Soundproofing": [
+          "स्टूडियो की एकॉस्टिक्स और साउंडप्रूफिंग बेहतरीन है, जिससे हर सुर साफ सुनाई देता है।",
+          "साउंड बैलेंस इतना सटीक है कि किसी भी इंस्ट्रूमेंट का इको नहीं आता।"
+        ],
+        "Top-Tier Drum Kit & Tube Amps": [
+          "ड्रम किट और गिटार एम्प्स बहुत अच्छी कंडीशन में हैं और जबरदस्त टोन देते हैं।",
+          "क्वालिटी बैकलाइन गियर्स जो लाइव प्लेइंग का पूरा मजा देते हैं।"
+        ],
+        "Helpful & Musician-Friendly Host": [
+          "स्टूडियो ओनर बेहद सहयोगी, मिलनसार और मददगार हैं।",
+          "म्यूजिशियंस की जरूरतों को समझकर तुरंत सहयोग करने वाला बेहतरीन मैनेजमेंट।"
+        ],
+        "Cozy Mood Lighting & Vibe": [
+          "स्टूडियो की लाइटिंग और एम्बियंस से बहुत ही सुकून भरी और पॉजिटिव वाइब मिलती है।",
+          "एकदम शांत और म्यूजिकल माहौल।"
+        ],
+        "Crystal Clear Vocal Monitors": [
+          "वोकल माइक्रोफोन और मॉनिटर्स बेहद स्पष्ट हैं, बिना किसी फीडबैक के।",
+          "गायन के दौरान आवाज बिल्कुल क्रिस्टल क्लियर सुनाई देती है।"
+        ],
+        "Affordable Hourly Jamming Rates": [
+          "किफायती और वाजिब घंटे की दरें, खराडी में इससे बेहतर विकल्प मिलना मुश्किल है।",
+          "कम खर्च में प्रोफेशनल स्टूडियो का अनुभव।"
+        ],
+        "Clean & Fully Air-Conditioned": [
+          "स्टूडियो बहुत साफ-सुथरा और पूरी तरह एयर-कंडीशन्ड है।",
+          "फुल एसी और कम्फर्टेबल सिटिंग स्पेस।"
+        ]
+      };
+
+      const conclusions = [
+        "पुणे के सभी सिंगर्स और बैंड्स को नाद जैमरूम जरूर आजमाना चाहिए! 10/10 रेटिंग।",
+        "आगे की सभी रिहर्सल्स के लिए हम यहीं आएंगे। बेहद अनुशंसित!",
+        "शानदार साउंड और बेहतरीन अनुभव के लिए 5 स्टार्स!"
+      ];
+
+      const opening = pickRandom(openings);
+      const middleParts = highlights
+        .map((h) => {
+          const options = highlightMap[h];
+          return options ? pickRandom(options) : "";
+        })
+        .filter(Boolean)
+        .slice(0, 3);
+      const conclusion = pickRandom(conclusions);
+      return `${opening} ${middleParts.join(" ")} ${conclusion}`.replace(/\s+/g, " ").trim();
+    }
+  }
+
   // =========================================================================
   // 1. TATTOO STUDIO NICHE GENERATOR (Bhikshu Tattoo & Zen/Peace Ink Experience)
   // =========================================================================

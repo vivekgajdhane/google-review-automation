@@ -93,3 +93,12 @@ div[data-testid="vercel-toolbar"] {
   will-change: transform, opacity;
 }
 
+@keyframes audioWave {
+  0%, 100% {
+    height: 6px;
+  }
+  50% {
+    height: 22px;
+  }
+}
+

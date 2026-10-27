@@ -71,6 +71,9 @@ for (const row of rows) {
     googleReviewUrl: String(row["Google Review Link"] || "").trim(),
     googleMapsUrl: String(row["Google Maps Profile Link"] || row["Google Review Link"] || "").trim(),
     websiteUrl: row["Website URL"] ? String(row["Website URL"]).trim() : undefined,
+    facebookUrl: row["Facebook URL"] 
+      ? String(row["Facebook URL"]).trim() 
+      : (slug === "bhikshu-tattoo" ? "https://www.facebook.com/bhikshutattoo" : undefined),
     instagram1: formatInstaUrl(instagram1),
     instagram1Label: formatInstaLabel(instagram1),
     instagram2: formatInstaUrl(instagram2),
@@ -83,6 +86,11 @@ for (const row of rows) {
     courseOptions: parseList(row["Services / Course Options (Semicolon separated)"]),
     highlightOptions: parseList(row["Review Highlights (Semicolon separated)"]),
   };
+}
+
+// Add alias for naad-jamroom
+if (registry["naadjamroom"]) {
+  registry["naad-jamroom"] = { ...registry["naadjamroom"], slug: "naad-jamroom" };
 }
 
 const fileContent = `import { PublicBusinessData } from "@/types/public-business";
@@ -102,6 +110,9 @@ export function getRegisteredBusiness(slug: string): PublicBusinessData {
   const normalized = (slug || "").toLowerCase().trim();
   if (BUSINESSES_REGISTRY[normalized]) {
     return BUSINESSES_REGISTRY[normalized];
+  }
+  if (normalized === "naad" || normalized === "naad-jamroom" || normalized === "naadjamroom") {
+    return BUSINESSES_REGISTRY["naadjamroom"] || BUSINESSES_REGISTRY["naad-jamroom"];
   }
   // Default fallback is bhikshu-tattoo
   return BUSINESSES_REGISTRY["bhikshu-tattoo"] || Object.values(BUSINESSES_REGISTRY)[0];

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 
 import { BhikshuReviewInterface } from "@/components/bhikshu/BhikshuReviewInterface";
+import { NaadReviewInterface } from "@/components/naad/NaadReviewInterface";
 
 function GenericBusinessReviewPage({ slug }: { slug: string }) {
   // Instant synchronous profile loading - 0ms delay, no layout shift or lag
@@ -632,6 +633,11 @@ export default function PublicBusinessPage({
 }) {
   const resolvedParams = React.use(params);
   const slug = resolvedParams?.slug || "bhikshu-tattoo";
+
+  // Dedicated custom interface for Naad Jamroom & Studio
+  if (slug === "naadjamroom" || slug === "naad-jamroom" || slug === "naad") {
+    return <NaadReviewInterface business={getRegisteredBusiness("naadjamroom")} />;
+  }
 
   // Dedicated custom interface for Bhikshu Tattoo Studio
   if (slug === "bhikshu-tattoo") {
