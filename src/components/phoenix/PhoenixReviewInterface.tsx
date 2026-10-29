@@ -447,17 +447,17 @@ export function PhoenixReviewInterface({
             {/* Primary Action Button */}
             <button
               onClick={handleCopyAndOpenGoogle}
-              className="flex-1 h-12 bg-[#045d17] hover:bg-[#034d13] active:scale-[0.99] text-white font-sora font-extrabold text-[12px] sm:text-xs tracking-wider uppercase rounded-xl shadow-md transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+              className="flex-1 h-12 bg-[#045d17] hover:bg-[#034d13] active:scale-[0.99] text-white font-sora font-extrabold text-[12px] sm:text-xs tracking-wider uppercase rounded-xl shadow-md transition-all flex items-center justify-center gap-2.5 px-4 cursor-pointer"
             >
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-white" />
+                  <Check className="w-4 h-4 text-white shrink-0" />
                   <span>COPIED! OPENING GOOGLE...</span>
                 </>
               ) : (
                 <>
                   <GoogleGIcon className="w-4 h-4 shrink-0 drop-shadow-sm" />
-                  <span>COPY DRAFT & POST TO GOOGLE</span>
+                  <span>POST TO GOOGLE</span>
                 </>
               )}
             </button>
@@ -584,3 +584,4 @@ export function PhoenixReviewInterface({
     </div>
   );
 }
+

@@ -520,7 +520,7 @@ END:VCARD`;
               ) : (
                 <>
                   <Copy className="w-4 h-4 text-white" />
-                  <span>Copy Draft & Open Google Reviews</span>
+                  <span>POST TO GOOGLE</span>
                   <ExternalLink className="w-3.5 h-3.5 text-white" />
                 </>
               )}
