@@ -148,10 +148,11 @@ export function PhoenixReviewInterface({
     [business.name, selectedHighlights, language, updateScrollIndicator]
   );
 
-  // Initial draft generation on first render
+  // Initial draft generation and document title on first render
   React.useEffect(() => {
+    document.title = `${business.name} — Google Reviews`;
     triggerReviewGeneration();
-  }, [triggerReviewGeneration]);
+  }, [business.name, triggerReviewGeneration]);
 
   // Toggle feedback highlight
   const toggleHighlight = (hl: string) => {

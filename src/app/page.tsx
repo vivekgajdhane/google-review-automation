@@ -10,15 +10,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const headerList = await headers();
   const host = headerList.get("host") || "";
 
-  if (host.includes("phoenix")) {
+  if (host.includes("bhikshu")) {
     return {
-      title: "Phoenix-Tech Academy — Google Reviews & Career Skills",
+      title: "Bhikshu Tattoo Studio — Google Reviews & Connect Sanctuary",
       description:
-        "Official Google review & student connect portal for Phoenix-Tech Academy, Hadapsar, Pune. 4.9 Stars • Computer Training & Skill Development.",
+        "Official Google review & customer connect portal for Bhikshu Tattoo Studio, Viman Nagar, Pune. 5.0 Stars (403 Reviews) • 100% Sterile Studio.",
       openGraph: {
-        title: "Phoenix-Tech Academy — Google Review Hub",
-        description: "Empowering careers through practical tech education. Share your learning experience on Google.",
-        images: ["/assets/phoenix-emblem-clean.png"],
+        title: "Bhikshu Tattoo Studio — Google Review Hub",
+        description: "Connecting your stories to your tattoo. Share your ink experience on Google.",
+        images: ["/assets/bhikshu-logo.png"],
       },
     };
   }
@@ -36,14 +36,15 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
+  // DEFAULT IS ALWAYS PHOENIX-TECH ACADEMY
   return {
-    title: "Bhikshu Tattoo Studio — Google Reviews & Connect Sanctuary",
+    title: "Phoenix-Tech Academy — Google Reviews",
     description:
-      "Official Google review & customer connect portal for Bhikshu Tattoo Studio, Viman Nagar, Pune. 5.0 Stars (403 Reviews) • 100% Sterile Studio.",
+      "Official Google review & student connect portal for Phoenix-Tech Academy, Sayyad Nagar, Hadapsar, Pune. 4.9 Stars • Practical Tech Education.",
     openGraph: {
-      title: "Bhikshu Tattoo Studio — Google Review Hub",
-      description: "Connecting your stories to your tattoo. Share your ink experience on Google.",
-      images: ["/assets/bhikshu-logo.png"],
+      title: "Phoenix-Tech Academy — Google Review Hub",
+      description: "Empowering careers through practical tech education. Share your learning experience on Google.",
+      images: ["/assets/phoenix-emblem-clean.png"],
     },
   };
 }
@@ -58,13 +59,14 @@ export default async function HomePage({
   const host = headerList.get("host") || "";
   const param = resolvedSearchParams?.biz || resolvedSearchParams?.slug || "";
 
-  if (host.includes("phoenix") || param.includes("phoenix")) {
-    return <PhoenixReviewInterface business={getRegisteredBusiness("phoenix-tech")} />;
+  if (host.includes("bhikshu") || param.includes("bhikshu")) {
+    return <BhikshuReviewInterface business={BHIKSHU_TATTOO_BUSINESS} />;
   }
 
   if (host.includes("naad") || param.includes("naad")) {
     return <NaadReviewInterface business={getRegisteredBusiness("naadjamroom")} />;
   }
 
-  return <BhikshuReviewInterface business={BHIKSHU_TATTOO_BUSINESS} />;
+  // DEFAULT IS ALWAYS PHOENIX-TECH ACADEMY
+  return <PhoenixReviewInterface business={getRegisteredBusiness("phoenix-tech")} />;
 }

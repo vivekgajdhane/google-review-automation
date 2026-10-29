@@ -155,5 +155,5 @@ export const NAAD_JAMROOM_BUSINESS: PublicBusinessData = {
   isDemo: false,
 };
 
-export const DEMO_PUBLIC_BUSINESS: PublicBusinessData = BHIKSHU_TATTOO_BUSINESS;
+export const DEMO_PUBLIC_BUSINESS: PublicBusinessData = PHOENIX_TECH_BUSINESS;
 

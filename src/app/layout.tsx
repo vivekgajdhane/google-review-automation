@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bhikshu Tattoo Studio — Google Reviews & Connect Sanctuary",
+  title: "Phoenix-Tech Academy — Google Reviews",
   description:
-    "Official Google review & customer connect portal for Bhikshu Tattoo Studio, Viman Nagar, Pune. 5.0 Stars (403 Reviews) • 100% Sterile Studio.",
+    "Official Google review & student connect portal for Phoenix-Tech Academy, Sayyad Nagar, Hadapsar, Pune. 4.9 Stars • Practical Tech Education.",
   openGraph: {
-    title: "Bhikshu Tattoo Studio — Google Review Hub",
-    description: "Connecting your stories to your tattoo. Share your ink experience on Google.",
-    images: ["/assets/bhikshu-logo.png"],
+    title: "Phoenix-Tech Academy — Google Review Hub",
+    description: "Empowering careers through practical tech education. Share your learning experience on Google.",
+    images: ["/assets/phoenix-emblem-clean.png"],
   },
 };
 
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="flex min-h-full flex-col bg-[#28302B] font-dm text-[#FFFFFF] selection:bg-[#9C7A3C] selection:text-white">
+      <body className="flex min-h-full flex-col bg-[#fff3d7] font-sora text-[#08210d] selection:bg-[#045d17] selection:text-white">
         {children}
       </body>
     </html>

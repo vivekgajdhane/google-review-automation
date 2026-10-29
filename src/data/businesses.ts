@@ -214,6 +214,6 @@ export function getRegisteredBusiness(slug: string): PublicBusinessData {
   if (normalized === "naad" || normalized === "naad-jamroom" || normalized === "naadjamroom") {
     return BUSINESSES_REGISTRY["naadjamroom"] || BUSINESSES_REGISTRY["naad-jamroom"];
   }
-  // Default fallback is bhikshu-tattoo
-  return BUSINESSES_REGISTRY["bhikshu-tattoo"] || Object.values(BUSINESSES_REGISTRY)[0];
+  // Default fallback is phoenix-tech
+  return BUSINESSES_REGISTRY["phoenix-tech"] || Object.values(BUSINESSES_REGISTRY)[0];
 }
