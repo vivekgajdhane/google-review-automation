@@ -1,6 +1,7 @@
 import { BhikshuReviewInterface } from "@/components/bhikshu/BhikshuReviewInterface";
 import { NaadReviewInterface } from "@/components/naad/NaadReviewInterface";
-import { BHIKSHU_TATTOO_BUSINESS, NAAD_JAMROOM_BUSINESS } from "@/types/public-business";
+import { PhoenixReviewInterface } from "@/components/phoenix/PhoenixReviewInterface";
+import { BHIKSHU_TATTOO_BUSINESS, NAAD_JAMROOM_BUSINESS, PHOENIX_TECH_BUSINESS } from "@/types/public-business";
 import { getRegisteredBusiness } from "@/data/businesses";
 import { Metadata } from "next";
 import { headers } from "next/headers";
@@ -8,6 +9,19 @@ import { headers } from "next/headers";
 export async function generateMetadata(): Promise<Metadata> {
   const headerList = await headers();
   const host = headerList.get("host") || "";
+
+  if (host.includes("phoenix")) {
+    return {
+      title: "Phoenix-Tech Academy — Google Reviews & Career Skills",
+      description:
+        "Official Google review & student connect portal for Phoenix-Tech Academy, Hadapsar, Pune. 4.9 Stars • Computer Training & Skill Development.",
+      openGraph: {
+        title: "Phoenix-Tech Academy — Google Review Hub",
+        description: "Empowering careers through practical tech education. Share your learning experience on Google.",
+        images: ["/assets/phoenix-emblem-clean.png"],
+      },
+    };
+  }
 
   if (host.includes("naad")) {
     return {
@@ -43,6 +57,10 @@ export default async function HomePage({
   const headerList = await headers();
   const host = headerList.get("host") || "";
   const param = resolvedSearchParams?.biz || resolvedSearchParams?.slug || "";
+
+  if (host.includes("phoenix") || param.includes("phoenix")) {
+    return <PhoenixReviewInterface business={getRegisteredBusiness("phoenix-tech")} />;
+  }
 
   if (host.includes("naad") || param.includes("naad")) {
     return <NaadReviewInterface business={getRegisteredBusiness("naadjamroom")} />;
