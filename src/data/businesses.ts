@@ -17,7 +17,7 @@ export const BUSINESSES_REGISTRY: Record<string, PublicBusinessData> = {
     "tagline": "Hadapsar, Pune • Computer Training & Skill Development",
     "category": "Computer Training Institute",
     "welcomeMessage": "Empowering careers through practical tech education! Share your learning experience on Google.",
-    "logoPath": "/assets/phoenix-logo.png",
+    "logoPath": "/assets/phoenix-emblem-clean.png",
     "primaryColor": "#045d17",
     "accentColor": "#fff3d7",
     "googleReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJrW2Ak0WhsYgR_IE53lu0Jqg",

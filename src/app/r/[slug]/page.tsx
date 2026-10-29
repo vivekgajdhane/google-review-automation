@@ -25,6 +25,7 @@ import {
 
 import { BhikshuReviewInterface } from "@/components/bhikshu/BhikshuReviewInterface";
 import { NaadReviewInterface } from "@/components/naad/NaadReviewInterface";
+import { PhoenixReviewInterface } from "@/components/phoenix/PhoenixReviewInterface";
 
 function GenericBusinessReviewPage({ slug }: { slug: string }) {
   // Instant synchronous profile loading - 0ms delay, no layout shift or lag
@@ -632,7 +633,17 @@ export default function PublicBusinessPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = React.use(params);
-  const slug = resolvedParams?.slug || "bhikshu-tattoo";
+  const slug = resolvedParams?.slug || "phoenix-tech";
+
+  // Dedicated custom interface for Phoenix-Tech Academy
+  if (
+    slug === "phoenix-tech" ||
+    slug === "phoenix" ||
+    slug === "phoenixtech" ||
+    slug === "phoenixtechacademy"
+  ) {
+    return <PhoenixReviewInterface business={getRegisteredBusiness("phoenix-tech")} />;
+  }
 
   // Dedicated custom interface for Naad Jamroom & Studio
   if (slug === "naadjamroom" || slug === "naad-jamroom" || slug === "naad") {
