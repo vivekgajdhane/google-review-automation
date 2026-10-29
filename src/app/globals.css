@@ -109,13 +109,23 @@ div[data-testid="vercel-toolbar"] {
 
 @keyframes phoenixFlightHover {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: perspective(650px) translateY(0px) rotateX(0deg) scale(1) rotate(0deg);
   }
-  30% {
-    transform: translateY(-4px) rotate(0.4deg);
+  22% {
+    /* Fluid Wing Downstroke: wings spread and sweep forward in 3D, bird lifts */
+    transform: perspective(650px) translateY(-6px) rotateX(15deg) scaleX(1.05) scaleY(0.97) rotate(0.6deg);
   }
-  70% {
-    transform: translateY(-2px) rotate(-0.4deg);
+  48% {
+    /* Mid-glide apex */
+    transform: perspective(650px) translateY(-5px) rotateX(6deg) scaleX(1.02) scaleY(0.99) rotate(-0.3deg);
+  }
+  72% {
+    /* Fluid Wing Upstroke: wings arch upward in 3D */
+    transform: perspective(650px) translateY(-1px) rotateX(-12deg) scaleX(0.95) scaleY(1.03) rotate(-0.5deg);
+  }
+  88% {
+    /* Soft glide transition */
+    transform: perspective(650px) translateY(-2px) rotateX(-4deg) scaleX(0.98) scaleY(1.01) rotate(0.2deg);
   }
 }
 
@@ -192,7 +202,9 @@ div[data-testid="vercel-toolbar"] {
 }
 
 .animate-phoenix-hover {
-  animation: phoenixFlightHover 2.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: phoenixFlightHover 2.4s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  transform-origin: 50% 68%;
+  transform-style: preserve-3d;
   will-change: transform;
 }
 
