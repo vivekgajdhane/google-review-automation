@@ -265,35 +265,20 @@ export function PhoenixReviewInterface({
       {/* Main Container */}
       <main className="w-full max-w-[420px] mx-auto flex flex-col items-center space-y-4 py-6 relative z-10 font-sora">
         {/* =========================================================================
-            COMPONENT 1: TOP LOGO ANIMATION (FLUID 3D WING FLIGHT & FIXED-LEVEL HOVER)
+            TOP LOGO (CLEAN ORIGINAL EMBLEM - COMPACT & PRISTINE)
             ========================================================================= */}
-        <div className="relative flex flex-col items-center justify-center pt-2 pb-1 select-none">
-          {/* Subtle Golden-Emerald Radiance Aura behind the floating phoenix */}
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-[#045d17]/15 blur-2xl pointer-events-none animate-phoenix-aura"
-            aria-hidden="true"
-          />
-
-          {/* Floating Phoenix Emblem in Motion (Single Pristine 4K Asset, Zero Seams) */}
-          <div className="relative animate-phoenix-hover flex items-center justify-center">
-            <div className="relative w-[130px] h-[104px] flex items-center justify-center drop-shadow-[0_8px_20px_rgba(4,93,23,0.22)]">
-              <Image
-                src="/assets/phoenix-emblem-clean.png"
-                alt="Phoenix-Tech Academy Emblem"
-                width={260}
-                height={208}
-                className="w-full h-full object-contain pointer-events-none select-none"
-                priority
-                unoptimized
-              />
-            </div>
+        <div className="relative flex flex-col items-center justify-center pt-2 pb-0.5 select-none">
+          <div className="relative w-[96px] h-[77px] flex items-center justify-center drop-shadow-[0_4px_12px_rgba(4,93,23,0.18)]">
+            <Image
+              src="/assets/phoenix-emblem-clean.png"
+              alt="Phoenix-Tech Academy Emblem"
+              width={192}
+              height={154}
+              className="w-full h-full object-contain pointer-events-none select-none"
+              priority
+              unoptimized
+            />
           </div>
-
-          {/* Dynamic Ground Shadow that breathes with flight */}
-          <div
-            className="w-16 h-2 rounded-full bg-[#045d17]/30 blur-[3px] mt-1.5 animate-phoenix-shadow pointer-events-none"
-            aria-hidden="true"
-          />
         </div>
 
         {/* =========================================================================
