@@ -274,63 +274,18 @@ export function PhoenixReviewInterface({
             aria-hidden="true"
           />
 
-          {/* Floating Phoenix Emblem with 3D Aerodynamic Wing Beats */}
+          {/* Floating Phoenix Emblem in Motion (Single Pristine 4K Asset, Zero Seams) */}
           <div className="relative animate-phoenix-hover flex items-center justify-center">
-            {/* Multi-layered Wing Flight: Left Wing, Right Wing, and Torso */}
             <div className="relative w-[130px] h-[104px] flex items-center justify-center drop-shadow-[0_8px_20px_rgba(4,93,23,0.22)]">
-              {/* Left Wing Layer with 3D Flap Perspective */}
-              <div
-                className="absolute inset-0 animate-phoenix-left-wing pointer-events-none select-none"
-                style={{
-                  clipPath: "polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%)"
-                }}
-              >
-                <Image
-                  src="/assets/phoenix-emblem-clean.png"
-                  alt="Phoenix Wing Left"
-                  width={260}
-                  height={208}
-                  className="w-full h-full object-contain"
-                  priority
-                  unoptimized
-                />
-              </div>
-
-              {/* Right Wing Layer with 3D Flap Perspective */}
-              <div
-                className="absolute inset-0 animate-phoenix-right-wing pointer-events-none select-none"
-                style={{
-                  clipPath: "polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)"
-                }}
-              >
-                <Image
-                  src="/assets/phoenix-emblem-clean.png"
-                  alt="Phoenix Wing Right"
-                  width={260}
-                  height={208}
-                  className="w-full h-full object-contain"
-                  priority
-                  unoptimized
-                />
-              </div>
-
-              {/* Central Torso & Head (Rock-solid, zero seam) */}
-              <div
-                className="absolute inset-0 pointer-events-none select-none"
-                style={{
-                  clipPath: "polygon(40% 0%, 60% 0%, 60% 100%, 40% 100%)"
-                }}
-              >
-                <Image
-                  src="/assets/phoenix-emblem-clean.png"
-                  alt="Phoenix Emblem Center"
-                  width={260}
-                  height={208}
-                  className="w-full h-full object-contain"
-                  priority
-                  unoptimized
-                />
-              </div>
+              <Image
+                src="/assets/phoenix-emblem-clean.png"
+                alt="Phoenix-Tech Academy Emblem"
+                width={260}
+                height={208}
+                className="w-full h-full object-contain pointer-events-none select-none"
+                priority
+                unoptimized
+              />
             </div>
           </div>
 
