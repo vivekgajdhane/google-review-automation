@@ -18,18 +18,19 @@ export interface BhikshuReviewInterfaceProps {
 }
 
 const STYLE_PILLS = [
-  { id: "ALL", label: "ALL" },
-  { id: "CUSTOM", label: "CUSTOM", full: "Custom Tattoo Design" },
-  { id: "REALISM", label: "REALISM", full: "Realism & Portraits" },
-  { id: "MANDALA", label: "MANDALA", full: "Mandala & Sacred Geometry" },
-  { id: "FINE LINE", label: "FINE LINE", full: "Minimalist & Fine Line" }
+  { id: "CUSTOM", label: "CUSTOM", full: "custom tattoo design" },
+  { id: "REALISM", label: "REALISM", full: "realism tattoo" },
+  { id: "MANDALA", label: "MANDALA", full: "mandala tattoo" },
+  { id: "FINE LINE", label: "FINE LINE", full: "fine line tattoo" },
+  { id: "COVERUP", label: "COVERUP", full: "cover-up tattoo" },
+  { id: "PIERCING", label: "PIERCING", full: "body piercing" }
 ];
 
 const ARTIST_PILLS = [
-  { id: "ALL", label: "ALL" },
   { id: "Sandip", label: "SANDIP" },
   { id: "Rohan", label: "ROHAN" },
-  { id: "Anthony", label: "ANTHONY" }
+  { id: "Anthony", label: "ANTHONY" },
+  { id: "Ashitosh", label: "ASHITOSH" }
 ];
 
 function GoogleGIcon({ className = "w-4 h-4 shrink-0" }: { className?: string }) {
@@ -71,9 +72,8 @@ function WhatsAppIcon({ className = "w-4 h-4 shrink-0" }: { className?: string }
 export function BhikshuReviewInterface({
   business = BHIKSHU_TATTOO_BUSINESS
 }: BhikshuReviewInterfaceProps) {
-  const [selectedPill, setSelectedPill] = React.useState<string>("ALL");
+  const [selectedPill, setSelectedPill] = React.useState<string>("CUSTOM");
   const [selectedArtist, setSelectedArtist] = React.useState<string>("ALL");
-  const [experience, setExperience] = React.useState<"good" | "not_good">("good");
   const [language, setLanguage] = React.useState<ReviewLanguage>("en");
   const [generatedDraft, setGeneratedDraft] = React.useState<string>("");
   const [copied, setCopied] = React.useState<boolean>(false);
@@ -137,10 +137,7 @@ export function BhikshuReviewInterface({
   // Generate review on mount or selection change
   React.useEffect(() => {
     const selectedItem = STYLE_PILLS.find((p) => p.id === selectedPill);
-    const styleParam =
-      selectedPill === "ALL"
-        ? "tattoo"
-        : selectedItem?.full || selectedPill;
+    const styleParam = selectedItem?.full || selectedPill;
 
     const draft = generateReviewDraft({
       businessName: business.name,
@@ -151,20 +148,16 @@ export function BhikshuReviewInterface({
         "Incredibly Fine Lines",
         "Peaceful Studio Ambience"
       ],
-      language: language,
-      sentiment: experience
+      language: language
     });
     setGeneratedDraft(draft);
-  }, [business.name, selectedPill, selectedArtist, language, experience]);
+  }, [business.name, selectedPill, selectedArtist, language]);
 
   // Handle shuffle button with smooth circular spin
   const handleShuffle = () => {
     setRefreshRotation((prev) => prev + 360);
     const selectedItem = STYLE_PILLS.find((p) => p.id === selectedPill);
-    const styleParam =
-      selectedPill === "ALL"
-        ? "tattoo"
-        : selectedItem?.full || selectedPill;
+    const styleParam = selectedItem?.full || selectedPill;
 
     const draft = generateReviewDraft({
       businessName: business.name,
@@ -175,8 +168,7 @@ export function BhikshuReviewInterface({
         "Incredibly Fine Lines",
         "Peaceful Studio Ambience"
       ],
-      language: language,
-      sentiment: experience
+      language: language
     });
     setGeneratedDraft(draft);
     showToast("✨ Generated a new review draft!");
@@ -283,75 +275,21 @@ export function BhikshuReviewInterface({
           />
         </div>
 
-        {/* 2. Rating Stars + Subtitle + Experience Selector */}
-        <div className="flex flex-col items-center space-y-2 pt-0.5 w-full">
+        {/* 2. Rating Stars + Subtitle (Clean & Minimal) */}
+        <div className="flex flex-col items-center space-y-1.5 pt-0.5 select-none">
           <div className="flex items-center gap-1.5 text-[#E0A93B]">
-            {[1, 2, 3, 4, 5].map((starVal) => {
-              const isFilled = experience === "good" ? starVal <= 5 : starVal <= 3;
-              return (
-                <button
-                  key={starVal}
-                  type="button"
-                  onClick={() => setExperience(starVal >= 4 ? "good" : "not_good")}
-                  className="transition-transform hover:scale-110 active:scale-95 focus:outline-none cursor-pointer"
-                  aria-label={`${starVal} Star Rating`}
-                >
-                  <Star
-                    className={`w-5 h-5 transition-colors ${
-                      isFilled
-                        ? "fill-[#E0A93B] text-[#E0A93B]"
-                        : "fill-transparent text-[#4E5C53]"
-                    }`}
-                  />
-                </button>
-              );
-            })}
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 fill-[#E0A93B] text-[#E0A93B]" />
+            ))}
           </div>
 
           <p className="font-sora text-xs uppercase tracking-[0.25em] text-[#FFFFFF] font-bold text-center pt-0.5">
             SHARE YOUR EXPERIENCE
           </p>
-
-          {/* Smooth Sliding Segmented Switch: Good Exp vs Not Good Exp in Font Sora */}
-          <div className="relative w-full max-w-[300px] sm:max-w-[320px] h-11 p-1 bg-[#1A211D]/95 border border-[#3A463E] rounded-full shadow-inner font-sora select-none mt-1">
-            {/* Smooth Sliding Background Indicator */}
-            <div
-              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-[#9C7A3C] shadow-[0_2px_10px_rgba(156,122,60,0.4)] transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform ${
-                experience === "good" ? "translate-x-0" : "translate-x-full"
-              }`}
-              aria-hidden="true"
-            />
-
-            {/* Symmetrically Spaced Labels */}
-            <div className="relative z-10 grid grid-cols-2 w-full h-full">
-              <button
-                type="button"
-                onClick={() => setExperience("good")}
-                className={`w-full h-full flex items-center justify-center text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
-                  experience === "good"
-                    ? "text-[#FFFFFF]"
-                    : "text-[#B5BEB7] hover:text-[#FFFFFF]"
-                }`}
-              >
-                GOOD EXP
-              </button>
-              <button
-                type="button"
-                onClick={() => setExperience("not_good")}
-                className={`w-full h-full flex items-center justify-center text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
-                  experience === "not_good"
-                    ? "text-[#FFFFFF]"
-                    : "text-[#B5BEB7] hover:text-[#FFFFFF]"
-                }`}
-              >
-                NOT GOOD EXP
-              </button>
-            </div>
-          </div>
         </div>
 
-        {/* 3. Category Style Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 w-full pt-1">
+        {/* 3. Category Style Pills (Tattoo Types Keywords) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 max-w-[360px] w-full pt-1">
           {STYLE_PILLS.map((pill) => {
             const isSelected = selectedPill === pill.id;
             return (
@@ -375,8 +313,8 @@ export function BhikshuReviewInterface({
           <div className="w-full h-px bg-white/15" />
         </div>
 
-        {/* Artists Row: "Sandip", "Rohan", "Anthony" */}
-        <div className="flex flex-wrap items-center justify-center gap-2 w-full">
+        {/* Artists Row: Sandip, Rohan, Anthony, Ashitosh */}
+        <div className="flex flex-wrap items-center justify-center gap-2 max-w-[360px] w-full">
           {ARTIST_PILLS.map((artist) => {
             const isSelected = selectedArtist === artist.id;
             return (
