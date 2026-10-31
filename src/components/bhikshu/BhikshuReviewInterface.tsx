@@ -288,15 +288,16 @@ export function BhikshuReviewInterface({
           </p>
         </div>
 
-        {/* 3. Category Style Pills (Tattoo Types Keywords) */}
-        <div className="flex flex-wrap items-center justify-center gap-2 max-w-[360px] w-full pt-1">
+        {/* 3. Category Style Pills (Tattoo Types Keywords) - Perfect 3x2 Grid */}
+        <div className="grid grid-cols-3 gap-2 w-full max-w-[360px] pt-1">
           {STYLE_PILLS.map((pill) => {
             const isSelected = selectedPill === pill.id;
             return (
               <button
                 key={pill.id}
+                type="button"
                 onClick={() => setSelectedPill(pill.id)}
-                className={`font-sora text-[11px] sm:text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+                className={`w-full h-9 flex items-center justify-center font-sora text-[11px] sm:text-xs font-bold uppercase tracking-wider px-1 rounded-full transition-all cursor-pointer whitespace-nowrap select-none ${
                   isSelected
                     ? "bg-[#9C7A3C] text-white shadow-md scale-[1.02]"
                     : "bg-[#1F2723]/90 text-[#B5BEB7] hover:text-[#FFFFFF] border border-[#3A463E] hover:border-[#4E5C53]"
@@ -308,22 +309,23 @@ export function BhikshuReviewInterface({
           })}
         </div>
 
-        {/* Minimal Horizontal Divider Bar above Artists */}
-        <div className="w-full max-w-[280px] flex items-center justify-center my-0.5">
+        {/* Minimal Horizontal Divider Bar - Matches Grid Width */}
+        <div className="w-full max-w-[360px] flex items-center justify-center my-1">
           <div className="w-full h-px bg-white/15" />
         </div>
 
-        {/* Artists Row: Sandip, Rohan, Anthony, Ashitosh */}
-        <div className="flex flex-wrap items-center justify-center gap-2 max-w-[360px] w-full">
+        {/* Artists Row: Sandip, Rohan, Anthony, Ashitosh - Perfect 4-Column Grid */}
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 w-full max-w-[360px]">
           {ARTIST_PILLS.map((artist) => {
             const isSelected = selectedArtist === artist.id;
             return (
               <button
                 key={artist.id}
+                type="button"
                 onClick={() =>
                   setSelectedArtist((prev) => (prev === artist.id ? "ALL" : artist.id))
                 }
-                className={`font-sora text-[11px] sm:text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+                className={`w-full h-9 flex items-center justify-center font-sora text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-1 rounded-full transition-all cursor-pointer whitespace-nowrap select-none ${
                   isSelected
                     ? "bg-[#9C7A3C] text-white shadow-md scale-[1.02]"
                     : "bg-[#1F2723]/90 text-[#B5BEB7] hover:text-[#FFFFFF] border border-[#3A463E] hover:border-[#4E5C53]"
