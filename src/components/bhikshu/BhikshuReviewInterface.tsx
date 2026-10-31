@@ -309,9 +309,13 @@ export function BhikshuReviewInterface({
           })}
         </div>
 
-        {/* Minimal Horizontal Divider Bar - Matches Grid Width */}
-        <div className="w-full max-w-[360px] flex items-center justify-center my-1">
-          <div className="w-full h-px bg-white/15" />
+        {/* Horizontal Divider Bar with Merged "ARTISTS" Label */}
+        <div className="w-full max-w-[360px] flex items-center justify-center gap-3 my-1 select-none">
+          <div className="flex-1 h-px bg-white/15" />
+          <span className="font-sora text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[#B5BEB7] font-semibold shrink-0">
+            ARTISTS
+          </span>
+          <div className="flex-1 h-px bg-white/15" />
         </div>
 
         {/* Artists Row: Sandip, Rohan, Anthony, Ashitosh - Perfect 4-Column Grid */}
